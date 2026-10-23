@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792788000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792789000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>MERGE PANG · 팡팡합체</title>
+<title>MARBLE PANG · 구슬팡</title>
 <meta name="description" content="이 게임은 박현아가 제공하는 비상업적 게임입니다.">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="팡팡합체">
-<meta property="og:title" content="MERGE PANG · 팡팡합체">
+<meta property="og:site_name" content="구슬팡">
+<meta property="og:title" content="MARBLE PANG · 구슬팡">
 <meta property="og:description" content="이 게임은 박현아가 제공하는 비상업적 게임입니다.">
 <meta property="og:url" content="https://iamhyona.github.io/fruitpang/">
 <meta property="og:image" content="https://iamhyona.github.io/fruitpang/og-image.png">
@@ -18,7 +18,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="팡팡합체">
+<meta name="apple-mobile-web-app-title" content="구슬팡">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="favicon-64.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,7 +113,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
     </div>
     <div class="field" id="field"><canvas id="cv"></canvas></div>
 
-    <div class="ov show" id="ovTitle"><div class="phS"><i class="phS-sp a"></i><div class="phS-logo" data-word="MERGE|PANG"></div><div class="phS-show" id="show"></div><i class="phS-sp b"></i><div class="phS-btns"><button class="phS-b" id="bStart">START</button><button class="phS-b gold" id="bRank2">RANKING</button></div><i class="phS-sp c"></i><div class="phS-credit">이 게임은 서울 마포구에 사는 박현아가 만든<br>비상업용 게임이에요. 구슬 팡팡이들을 합쳐서<br>커다란 핑크 하트 구슬을 만들어 주세요.</div></div></div>
+    <div class="ov show" id="ovTitle"><div class="phS"><i class="phS-sp a"></i><div class="phS-logo" data-word="MARBLE|PANG"></div><div class="phS-show" id="show"></div><i class="phS-sp b"></i><div class="phS-btns"><button class="phS-b" id="bStart">START</button><button class="phS-b gold" id="bRank2">RANKING</button></div><i class="phS-sp c"></i><div class="phS-credit">이 게임은 서울 마포구에 사는 박현아가 만든<br>비상업용 게임이에요. 구슬 팡팡이들을 합쳐서<br>커다란 핑크 하트 구슬을 만들어 주세요.</div></div></div>
     <div class="ov" id="ovPause">
       <div class="big" style="font-size:28px">PAUSE</div>
       <button class="btn" id="bResume">RESUME</button>
