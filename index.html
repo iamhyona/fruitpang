@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792776000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792777000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MERGE PANG · 팡팡합체</title>
@@ -113,7 +113,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
     </div>
     <div class="field" id="field"><canvas id="cv"></canvas></div>
 
-    <div class="ov show" id="ovTitle"><div class="phS"><i class="phS-sp a"></i><div class="phS-logo" data-word="MERGE|PANG"></div><div class="phS-show" id="show"></div><i class="phS-sp b"></i><div class="phS-btns"><button class="phS-b" id="bStart">START</button><button class="phS-b gold" id="bRank2">RANKING</button></div><i class="phS-sp c"></i><div class="phS-credit">이 게임은 서울 마포구에 사는 박현아가 만든<br>비상업용 게임이에요. 팡팡이들을 합쳐서<br>커다란 무지개 팡팡이를 만들어 주세요.</div></div></div>
+    <div class="ov show" id="ovTitle"><div class="phS"><i class="phS-sp a"></i><div class="phS-logo" data-word="MERGE|PANG"></div><div class="phS-show" id="show"></div><i class="phS-sp b"></i><div class="phS-btns"><button class="phS-b" id="bStart">START</button><button class="phS-b gold" id="bRank2">RANKING</button></div><i class="phS-sp c"></i><div class="phS-credit">이 게임은 서울 마포구에 사는 박현아가 만든<br>비상업용 게임이에요. 구슬 팡팡이들을 합쳐서<br>커다란 핑크 구슬을 만들어 주세요.</div></div></div>
     <div class="ov" id="ovPause">
       <div class="big" style="font-size:28px">PAUSE</div>
       <button class="btn" id="bResume">RESUME</button>
@@ -145,25 +145,13 @@ const $=id=>document.getElementById(id);
 const cv=$('cv'),x=cv.getContext('2d');
 const W=300,H=470,TOP=78; // 고정 좌표계 · TOP 위로 넘치면 위험선
 let SC=1,OX=0,OY=0,dpr=1;
-/* ===== 팡팡이 (팡야팡야의 원래 친구들) — 크기만 커지고 테두리 두께는 모두 같게 ===== */
-const COL={1:['#e8352e','#ff8a73','#a8170f'],2:['#efe6cf','#fffdf4','#b9a98a'],3:['#3e8fe6','#9fd3ff','#1c58ad'],4:['#f6a51e','#ffe08a','#c06a00'],5:['#e264c4','#ffc0ee','#a32c8a'],6:['#6cc644','#d2f5a6','#3a8a24'],7:['#3fc9b0','#b4f5e6','#178a74'],8:['#8a4fe0','#d4b8ff','#5a26a8'],10:['#a8683a','#ecc196','#6e3f1c'],9:['#7c818a','#c3c8d0','#4a4f57']};
-const star=(cx,cy,R,r)=>'M'+[...Array(10)].map((_,k)=>{const a=-Math.PI/2+k*Math.PI/5,q=k%2?r:R;return (cx+q*Math.cos(a)).toFixed(2)+' '+(cy+q*Math.sin(a)).toFixed(2)}).join(' L')+'Z';
-const hexa=(cx,cy,R)=>'M'+[...Array(6)].map((_,k)=>{const a=Math.PI/6+k*Math.PI/3;return (cx+R*Math.cos(a)).toFixed(2)+' '+(cy+R*Math.sin(a)).toFixed(2)}).join(' L')+'Z';
-const SH={1:'<path d="M20 35.5C7.5 29 3.2 22.5 3.2 15.2C3.2 8.6 7.6 4.2 13 4.2C16.3 4.2 18.7 6 20 8.6C21.3 6 23.7 4.2 27 4.2C32.4 4.2 36.8 8.6 36.8 15.2C36.8 22.5 32.5 29 20 35.5Z"/>',
-2:'<circle cx="20" cy="10.5" r="9"/><circle cx="29.5" cy="20" r="9"/><circle cx="20" cy="29.5" r="9"/><circle cx="10.5" cy="20" r="9"/><rect x="8" y="8" width="24" height="24" rx="7"/>',
-3:'<path d="M20 4C27 11.5 36.5 16.5 36.5 25C36.5 32.6 29.6 37 20 37C10.4 37 3.5 32.6 3.5 25C3.5 16.5 13 11.5 20 4Z"/>',
-4:'<path d="'+star(20,21.3,16.2,11.6)+'"/>',5:'<path d="'+hexa(20,20.3,16.2)+'"/>',
-6:'<path d="M20 15.5C21.2 10.5 24.6 6.6 31 5.6C31.6 11.8 27.6 15.4 22 16.3Z"/><path d="M20 15.5C18.8 11.6 15.6 8.6 9.6 8.4C9.6 13.6 13.6 16.4 18.4 16.5Z"/><rect x="4.5" y="14.5" width="31" height="22" rx="11"/>',
-7:'<rect x="4" y="4.5" width="32" height="31.5" rx="15"/>',8:'<path d="M20 3.5C21 3.5 22 4 22.8 4.9L35.6 17.6C36.6 18.7 36.6 20.3 35.6 21.4L22.8 34.6C21.3 36.2 18.7 36.2 17.2 34.6L4.4 21.4C3.4 20.3 3.4 18.7 4.4 17.6L17.2 4.9C18 4 19 3.5 20 3.5Z"/>',10:'<rect x="5" y="5" width="30" height="30" rx="3.5"/>',9:'<rect x="5" y="5" width="30" height="30" rx="7"/>'};
-const SW={1:3.5,2:2,3:3.5,4:9,5:10,6:2,7:2,8:8,9:2,10:2},FY={1:-1,2:0,3:4,4:2,5:0,6:6,7:0,8:2,9:0,10:0},CT={1:[.5,.42],2:[.5,.45],3:[.5,.62],4:[.5,.55],5:[.5,.48],6:[.5,.62],7:[.5,.45],8:[.5,.52],9:[.5,.45],10:[.5,.48]};
-const TK=[1,3,4,2,5,6,7,8,10,'R']; // 하트 → 물방울 → 별 → 꽃 → 육각 → 새싹 → 민트 → 다이아 → 네모 → 무지개
-const NAME=['하트','물방울','별','꽃','육각','새싹','민트','다이아','네모','무지개'];
-const TR=[10,14,19,25,32,40,49,59,71,86]; // 반지름: 단계마다 확실히 커지게
-const TS=[1,3,6,10,15,21,28,36,45,55]; // 합쳐질 때 점수
-const MAXK=9,Q=4,OLW=2.6; // OLW: 테두리 두께 (모든 크기에서 같음)
-const FR=TK.map((t,k)=>[NAME[k],t==='R'?'#ff8a3c':COL[t][0]]);
-COL.R=['#ff6a8a','#fff3a0','#6a5aff'];SH.R='<circle cx="20" cy="20" r="16.5"/>';SW.R=2;FY.R=0;CT.R=[.5,.5];
-function shapePath(svg){const p=new Path2D();svg.replace(/<path d="([^"]+)"\/>/g,(_,d)=>{p.addPath(new Path2D(d));return''}).replace(/<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"\/>/g,(_,x,y,r)=>{p.moveTo(+x+ +r,+y);p.arc(+x,+y,+r,0,7);return''}).replace(/<rect x="([\d.]+)" y="([\d.]+)" width="([\d.]+)" height="([\d.]+)" rx="([\d.]+)"\/>/g,(_,x,y,w,h,r)=>{p.roundRect(+x,+y,+w,+h,+r);return''});return p}
+/* ===== 구슬 팡팡이 — 모두 같은 표정, 크기만 커지고 테두리 두께는 같게 ===== */
+const NAME=['빨강','주황','노랑','연두','초록','하늘','파랑','보라','핑크'];
+const GC=[['#ff4d5e','#ffb3b8','#b0182a'],['#ff9a2e','#ffd6a3','#c25a00'],['#ffd93a','#fff4b0','#c99a00'],['#b4e04a','#e9ffb0','#6f9a14'],['#34c46a','#a8f0c0','#14803a'],['#55ccff','#c4f0ff','#1688c4'],['#3d74ff','#b4c8ff','#1a3fb8'],['#9a5cff','#dcc4ff','#5a26b8'],['#ff6ec7','#ffd0ef','#c42a8a']];
+const TR=[12,17,23,30,38,47,57,68,80]; // 반지름: 단계마다 확실히 커지게
+const TS=[1,3,6,10,15,21,28,36,45]; // 합쳐질 때 점수
+const MAXK=8,Q=4,OLW=2.6; // OLW: 테두리 두께 (모든 크기에서 같음)
+const FR=GC.map((c,k)=>[NAME[k],c[0]]);
 function face(g,s,fy,k){ // 단계마다 다른 표정
  const o='#2a1712',ex=4*s,ey=-2*s+fy;g.fillStyle=g.strokeStyle=o;g.lineCap=g.lineJoin='round';
  const eye=(x,y,sx=1)=>{g.beginPath();g.ellipse(x,y,1.7*s*sx,2.3*s*sx,0,0,7);g.fill();g.fillStyle='rgba(255,255,255,.9)';g.beginPath();g.ellipse(x+.5*s,y-.8*s,.55*s,.7*s,0,0,7);g.fill();g.fillStyle=o};
@@ -187,25 +175,36 @@ function face(g,s,fy,k){ // 단계마다 다른 표정
  }}
 function moodFace(g,s,fy,k,mood){const o='#2a1712',ex=4*s,ey=-2*s+fy;g.fillStyle=g.strokeStyle=o;g.lineCap='round';
  if(mood==='x'){g.lineWidth=1.6*s;for(const sx of[-1,1]){g.beginPath();g.moveTo(sx*ex-1.8*s,ey-1.8*s);g.lineTo(sx*ex+1.8*s,ey+1.8*s);g.moveTo(sx*ex+1.8*s,ey-1.8*s);g.lineTo(sx*ex-1.8*s,ey+1.8*s);g.stroke()}g.beginPath();g.moveTo(-3*s,fy+4*s);g.quadraticCurveTo(-1.5*s,fy+2.6*s,0,fy+4*s);g.quadraticCurveTo(1.5*s,fy+5.4*s,3*s,fy+4*s);g.stroke();return}
- if(mood==='b'&&[0,1,2,4,8].includes(k)){g.lineWidth=1.5*s;for(const sx of[-1,1]){g.beginPath();g.moveTo(sx*ex-1.7*s,ey);g.quadraticCurveTo(sx*ex,ey+1.5*s,sx*ex+1.7*s,ey);g.stroke()}g.beginPath();g.moveTo(-4.4*s,fy+1.8*s);g.quadraticCurveTo(0,fy+7*s,4.4*s,fy+1.8*s);g.quadraticCurveTo(0,fy+3.8*s,-4.4*s,fy+1.8*s);g.fill();return}
- face(g,s,fy,k===9?10:k)}
-const BR={}; // 모양마다 실제 바깥 반지름(SVG 단위) 측정
-function shapeR(t){if(BR[t])return BR[t];const c=document.createElement('canvas');c.width=c.height=184;const g=c.getContext('2d'),p=shapePath(SH[t]);g.scale(4,4);g.translate(3,3);g.lineJoin='round';g.lineWidth=SW[t];g.fill(p);g.stroke(p);
- const d=g.getImageData(0,0,184,184).data;let m=0;for(let y=0;y<184;y+=2)for(let x=0;x<184;x+=2)if(d[(y*184+x)*4+3]>40){const q=Math.hypot(x/4-23,y/4-23);if(q>m)m=q}return BR[t]=m+.3}
-function fruitCanvas(k,mood){const t=TK[k],r=TR[k],R=r*Q,ol=OLW*Q,D=Math.ceil(R*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');
- const [b,l,d]=COL[t],f=(R-ol)/shapeR(t),path=shapePath(SH[t]),[cx,cy]=CT[t]||[.5,.5]; // 바깥선 포함해서 충돌원 안에 꽉 차게
- g.translate(D/2,D/2);g.lineJoin=g.lineCap='round';
- g.save();g.scale(f,f);g.translate(-20,-20);
- g.lineWidth=SW[t]+ol*2/f;g.strokeStyle=g.fillStyle='#1b1430';g.fill(path);g.stroke(path); // 바깥선: 크기와 상관없이 같은 두께
- let gr;if(t==='R'){gr=g.createLinearGradient(4,4,36,36);['#ff5a6a','#ffa53a','#ffe14a','#7cd84a','#4ab8f0','#8a6aff'].forEach((cc,i)=>gr.addColorStop(i/5,cc))}
- else{gr=g.createRadialGradient(2+cx*36-6,2+cy*36-7,1,2+cx*36,2+cy*36,23);gr.addColorStop(0,l);gr.addColorStop(.5,b);gr.addColorStop(.86,b);gr.addColorStop(1,d)}
- g.lineWidth=SW[t];g.strokeStyle=g.fillStyle=gr;g.fill(path);g.stroke(path);
- g.save();g.clip(path);g.globalAlpha=.85;g.fillStyle='#fff';g.beginPath();g.ellipse(13.5,9.5,5.2,2.6,-.49,0,7);g.fill();g.globalAlpha=.7;g.beginPath();g.arc(9.5,14,1.1,0,7);g.fill();g.restore();
- g.restore();
- moodFace(g,f*1.05,(FY[t]||0)*f,k,mood);
+ if(mood==='b'){g.lineWidth=1.5*s;for(const sx of[-1,1]){g.beginPath();g.moveTo(sx*ex-1.7*s,ey);g.quadraticCurveTo(sx*ex,ey+1.5*s,sx*ex+1.7*s,ey);g.stroke()}g.beginPath();g.moveTo(-4.4*s,fy+1.8*s);g.quadraticCurveTo(0,fy+7*s,4.4*s,fy+1.8*s);g.quadraticCurveTo(0,fy+3.8*s,-4.4*s,fy+1.8*s);g.fill();g.fillStyle='rgba(255,110,140,.45)';for(const sx of[-1,1]){g.beginPath();g.ellipse(sx*7.2*s,fy+1.6*s,2.1*s,1.2*s,0,0,7);g.fill()}return}
+ face(g,s,fy,0)} // 모두 같은 표정 (방긋)
+function fruitCanvas(k,mood,part){const r=TR[k],R=r*Q,ol=OLW*Q,D=Math.ceil(R*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');
+ const [b,l,d]=GC[k],ri=R-ol; g.translate(D/2,D/2);
+ g.beginPath();g.arc(0,0,R,0,7);g.fillStyle='#14102a';g.fill(); // 바깥선: 크기와 상관없이 같은 두께
+ let gr=g.createRadialGradient(-ri*.35,-ri*.4,ri*.05,0,0,ri);gr.addColorStop(0,l);gr.addColorStop(.45,b);gr.addColorStop(.85,b);gr.addColorStop(1,d);
+ g.beginPath();g.arc(0,0,ri,0,7);g.fillStyle=gr;g.fill();
+ g.save();g.beginPath();g.arc(0,0,ri,0,7);g.clip();
+ gr=g.createRadialGradient(ri*.35,ri*.55,0,ri*.35,ri*.55,ri*.7);gr.addColorStop(0,'rgba(255,255,255,.38)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(-ri,-ri,ri*2,ri*2); // 아래쪽 반사광 (구슬 느낌)
+ g.globalAlpha=.9;g.fillStyle='#fff';g.beginPath();g.ellipse(-ri*.36,-ri*.52,ri*.34,ri*.17,-.55,0,7);g.fill();
+ g.globalAlpha=.75;g.beginPath();g.arc(-ri*.66,-ri*.18,ri*.07,0,7);g.fill();
+ g.globalAlpha=.55;g.beginPath();g.arc(ri*.5,ri*.62,ri*.06,0,7);g.fill();g.restore();
+ if(part!=='base')moodFace(g,ri/15,ri*.12,k,mood);
  return c}
+function faceCanvas(k,mood){const R=TR[k]*Q,ri=R-OLW*Q,D=Math.ceil(R*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');g.translate(D/2,D/2);moodFace(g,ri/15,ri*.12,k,mood);return c}
 const IMG={};
-for(let k=0;k<=MAXK;k++)for(const m of ['','b','x'])IMG[m+k]=fruitCanvas(k,m);
+const BASE=[],FACE={};
+for(let k=0;k<=MAXK;k++){IMG[''+k]=fruitCanvas(k,'');BASE[k]=fruitCanvas(k,'','base');for(const m of ['','b','x'])FACE[m+k]=faceCanvas(k,m)} // 광택은 고정, 얼굴만 굴러감
+/* ===== 도트 글자 (점수 숫자를 그래픽으로) ===== */
+const PF={'0':'01110100011001110101110011000101110','1':'00100011000010000100001000010001110','2':'01110100010000100010001000100011111','3':'11111000100010000010000011000101110','4':'00010001100101010010111110001000010','5':'11111100001111000001000011000101110','6':'00110010001000011110100011000101110','7':'11111000010001000100010000100001000','8':'01110100011000101110100011000101110','9':'01110100011000101111000010001001100',
+'+':'00000001000010011111001000010000000','X':'00000100010101000100010101000100000','!':'00100001000010000100001000000000100',
+'A':'01110100011000111111100011000110001','C':'01110100011000010000100001000101110','D':'11100100101000110001100011001011100','E':'11111100001000011110100001000011111','F':'11111100001000011110100001000010000','G':'01110100011000010111100011000101111','I':'01110001000010000100001000010001110','K':'10001100101010011000101001001010001','N':'10001110011010110011100011000110001','O':'01110100011000110001100011000101110','P':'11110100011000111110100001000010000','R':'11110100011000111110101001001010001','T':'11111001000010000100001000010000100','Y':'10001100010101000100001000010000100',' ':'00000000000000000000000000000000000'};
+const PTC={};
+let PTN=0;function pixText(txt,col,p){const key=txt+col+p;if(PTC[key])return PTC[key];if(++PTN>300){for(const q in PTC)delete PTC[q];PTN=0}const cs=[...txt.toUpperCase()].map(ch=>PF[ch]||PF[' ']),w=cs.length*6-1,h=7,c=document.createElement('canvas');c.width=(w+2)*p;c.height=(h+2)*p+p;const g=c.getContext('2d');
+ const on=(x,y)=>{const i=Math.floor(x/6),xx=x%6;return x>=0&&y>=0&&y<7&&i<cs.length&&xx<5&&cs[i][y*5+xx]==='1'};
+ g.fillStyle='#0a0c1d';for(let y=-1;y<=h;y++)for(let x=-1;x<=w;x++){let n=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)if(on(x+dx,y+dy))n=1;if(n){g.fillRect((x+1)*p,(y+1)*p,p,p);g.fillRect((x+1)*p,(y+2)*p,p,p)}} // 테두리 + 아래 그림자
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(on(x,y)){g.fillStyle=y===0?'#fff':y<=3?tint(col,.45):col;g.fillRect((x+1)*p,(y+1)*p,p,p)}
+ return PTC[key]=c}
+function tint(h,t){const n=parseInt(h.slice(1),16),f=v=>Math.round(v+(255-v)*(t||.55));return 'rgb('+f(n>>16)+','+f(n>>8&255)+','+f(n&255)+')'}
+function shade(h){const n=parseInt(h.slice(1),16),f=v=>Math.round(v*.72);return 'rgb('+f(n>>16)+','+f(n>>8&255)+','+f(n&255)+')'}
 
 /* ===== 소리 ===== */
 let ac,sound=true,master=null;
@@ -261,12 +260,12 @@ function doMerges(){if(!mergeQ.length)return;const done=new Set();
  for(const [a,b] of mergeQ){if(done.has(a)||done.has(b)||a.gone||b.gone)continue;done.add(a);done.add(b);a.gone=b.gone=1;Composite.remove(engine.world,[a,b]);bodies=bodies.filter(o=>o!==a&&o!==b);
   const k=a.tier,mx=(a.position.x+b.position.x)/2,my=(a.position.y+b.position.y)/2;
   combo=tGame-comboT<1.2?combo+1:1;comboT=tGame;const mul=Math.min(5,combo);
-  if(k===MAXK){ // 수박 + 수박 = 수박 파티!
-   const pts=500*mul;score+=pts;burst(mx,my,'#ff6b7a',60,true);FX.push({txt:'무지개 파티! +'+pts,x:mx,y:my-20,l:1.8,c:'#ff9aa5',big:1});sfx.party();buzz([40,40,80]);shake=.5;continue}
+  if(k===MAXK){ // 핑크 + 핑크 = 파티!
+   const pts=500*mul;score+=pts;burst(mx,my,'#ff6b7a',60,true);FX.push({txt:'PARTY! +'+pts,x:mx,y:my-20,l:1.8,L:1.8,c:'#ff6ec7',big:1});sfx.party();buzz([40,40,80]);shake=.5;continue}
   const nk=k+1,nb=addPiece(nk,mx,my,-1.2);nb.pop=tGame;maxTier=Math.max(maxTier,nk);
   const pts=TS[nk]*mul;score+=pts;burst(mx,my,colorOf(nk),10+nk*3,nk>=7);
-  FX.push({txt:'+'+pts+(mul>1?' x'+mul:''),x:mx,y:my-TR[nk]-6,l:1,c:mul>1?'#ffd23f':'#dfe4ff'});
-  if(nk===MAXK){FX.push({txt:'무지개 팡팡이 완성!',x:W/2,y:H*.35,l:1.8,c:'#9fe08a',big:1});sfx.mandu();buzz([30,30,60]);shake=.35}else{sfx.merge(nk);buzz(nk>=6?25:12)}}
+  FX.push({txt:'+'+pts+(mul>1?' X'+mul:''),x:mx,y:my-TR[nk]-6,l:1,L:1,c:mul>1?'#ffd23f':colorOf(nk),sc:nk>=5?1.25:1});
+  if(nk===MAXK){FX.push({txt:'PERFECT!',x:W/2,y:H*.35,l:1.8,L:1.8,c:'#ff6ec7',big:1});sfx.mandu();buzz([30,30,60]);shake=.35}else{sfx.merge(nk);buzz(nk>=6?25:12)}}
  mergeQ=[];if(score>best){best=score;try{localStorage.setItem('fruit-best',best)}catch(e){}}hud()}
 function colorOf(k){return FR[k][1]}
 function burst(px,py,col,n,big){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
@@ -281,7 +280,7 @@ function showOver(){$('overScore').textContent=score.toLocaleString();$('overTit
 /* ===== 그리기 ===== */
 function resize(){const r=$('field').getBoundingClientRect();dpr=Math.min(3,devicePixelRatio||1);cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);SC=Math.min(cv.width/W,cv.height/H);OX=(cv.width-W*SC)/2;OY=(cv.height-H*SC);draw(0)}
 addEventListener('resize',resize);if(window.visualViewport)visualViewport.addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(resize).observe($('field'));
-function drawPiece(k,px,py,ang,mood,sc,alpha){const im=IMG[(mood||'')+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);x.rotate(ang||0);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.restore()}
+function drawPiece(k,px,py,ang,mood,sc,alpha){const im=BASE[k],fc=FACE[(mood||'')+k]||FACE[''+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.rotate(ang||0);x.drawImage(fc,-s/2,-s/2,s,s);x.restore()}
 function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0,0,cv.width,cv.height);
  let sx=0,sy=0;if(shake>0){sx=(Math.random()*2-1)*5*shake;sy=(Math.random()*2-1)*5*shake}
  x.setTransform(SC,0,0,SC,OX+sx*SC,OY+sy*SC);
@@ -299,10 +298,11 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
   if(b.over>.5)mood='x';else if((now+b.blink)%4<.14)mood='b';else if(b.speed>6)mood='o';
   drawPiece(k,b.position.x,b.position.y,b.angle,mood,1+popS*.25)}
  // 효과
- for(const f of FX){f.l-=dt;if(f.txt){f.y-=24*dt;x.globalAlpha=Math.max(0,Math.min(1,f.l*1.5));x.font=(f.big?'18px':'12px')+' Galmuri11, Silkscreen';x.textAlign='center';x.lineWidth=3;x.strokeStyle='#0a0c1d';x.strokeText(f.txt,f.x,f.y);x.fillStyle=f.c;x.fillText(f.txt,f.x,f.y);x.globalAlpha=1;continue}
+ for(const f of FX){f.l-=dt;if(f.txt){f.y-=22*dt;const p=1-f.l/(f.L||1),pop=p<.12?.5+p/.12*.8:p<.22?1.3-(p-.12)/.1*.3:1,cell=Math.max(2,Math.round((f.big?3.2:2.4)*(f.sc||1)*pop*SC)),im=pixText(f.txt,f.c,cell); // 도트 그래픽 숫자 (화면 픽셀에 딱 맞게)
+  x.globalAlpha=Math.max(0,Math.min(1,f.l*2.2));const w=im.width/SC,px=Math.max(w/2+2,Math.min(W-w/2-2,f.x));x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+(px-w/2)*SC),Math.round(OY+f.y*SC-im.height/2));x.restore();x.globalAlpha=1;continue}
   f.vy+=300*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.97;x.globalAlpha=Math.max(0,f.l*1.6);x.fillStyle=f.c;x.fillRect(f.x,f.y,f.s,f.s);x.globalAlpha=1}
  FX=FX.filter(f=>f.l>0);
- if(state==='play'&&warnT>.3){x.font='13px Galmuri11';x.textAlign='center';x.fillStyle='#ff8aa0';x.fillText('넘치기 직전이에요!',W/2,TOP-56)}}
+ if(state==='play'&&warnT>.3){const im=pixText('DANGER!','#ff5a6e',Math.max(2,Math.round(2*SC)));if(Math.floor(tGame*4)%2){x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+W/2*SC-im.width/2),Math.round(OY+(TOP-56)*SC-im.height/2));x.restore()}}}
 function drawNext(){const c=$('nextC'),g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);const im=IMG[''+nxt];if(!im)return;g.clearRect(0,0,c.width,c.height);const s=(30+nxt*7)*1.5;g.drawImage(im,(c.width-s)/2,(c.height-s)/2,s,s)}
 
 /* ===== 조작: 손가락으로 위치 고르고, 떼면 떨어뜨리기 ===== */
@@ -330,7 +330,7 @@ function pixIcon(k){const m=PIX[k];let r='';m.forEach((row,y)=>[...row].forEach(
 document.querySelectorAll('[data-ic]').forEach(el=>{el.outerHTML=pixIcon(el.dataset.ic).replace('<i class="pix"','<i class="pix" data-ic="'+el.dataset.ic+'"')});
 function hud(){$('hScore').textContent=score.toLocaleString();const s=$('hScore'),p=s.parentElement;s.style.fontSize='14px';let f=14;while(s.scrollWidth>p.clientWidth-6&&f>8){f--;s.style.fontSize=f+'px'}}
 function show(id){$(id).classList.add('show')}function hide(id){$(id).classList.remove('show')}
-(function(){const sh=$('show');[0,2,4,6,9].forEach(k=>{const im=document.createElement('img');im.src=IMG[''+k].toDataURL();im.style.cssText='width:'+(k===9?52:36)+'px;height:auto;margin:0 -4px';im.alt='';sh.appendChild(im)})})();
+(function(){const sh=$('show');[0,2,4,6,8].forEach(k=>{const im=document.createElement('img');im.src=IMG[''+k].toDataURL();im.style.cssText='width:'+(k===8?52:36)+'px;height:auto;margin:0 -4px';im.alt='';sh.appendChild(im)})})();
 function togglePause(){if(state==='play'){state='pause';bgmStop();show('ovPause')}else if(state==='pause'){state='play';hide('ovPause');bgmStart();lastT=0}}
 $('bPause').onclick=togglePause;$('bResume').onclick=togglePause;
 $('bRestart').onclick=()=>{hide('ovPause');startGame()};
@@ -338,7 +338,7 @@ function toMenu(){['ovPause','ovOver','ovRank'].forEach(hide);$('field').classLi
 $('bMenu').onclick=toMenu;$('bMenu2').onclick=toMenu;
 $('bSound').onclick=()=>{sound=!sound;$('bSound').classList.toggle('on',sound);if(ac&&master)master.gain.value=sound?1:0;if(sound&&state==='play')bgmStart()};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')togglePause()});
-const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>하트부터 시작해서 끝까지 키우면 무지개 팡팡이!<br>점선 위로 넘치면 게임 끝!","touch":[["아무데나 탭","그 자리로 떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
+const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>빨강부터 시작해서 끝까지 키우면 핑크 구슬!<br>점선 위로 넘치면 게임 끝!","touch":[["아무데나 탭","그 자리로 떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
 $('bStart').onclick=()=>{unlock();phTut('fruit-tut',TUT,startGame)};
 $('bRetry').onclick=()=>{hide('ovOver');startGame()};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>hide(b.dataset.close));
@@ -352,7 +352,7 @@ $('bSave').onclick=async()=>{if(!lastWin||lastWin.saved)return;const n=($('nameI
  try{await fetch(`${RANK_URL}?g=fruit&a=add&n=${encodeURIComponent(n)}&s=${rec.s}&v=${rec.v}&m=${rec.m}`)}catch(e){}$('bSave').textContent='✓';openRank()};
 async function openRank(){show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());render(j.top||[])}catch(e){render(local())}}
 function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}rows=rows.slice().sort((a,b)=>b.s-a.s);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
- $('rankList').innerHTML=rows.length?rows.map((r,i)=>{let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}const tier=Math.max(1,Math.min(10,+r.v||1));
+ $('rankList').innerHTML=rows.length?rows.map((r,i)=>{let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}const tier=Math.max(1,Math.min(9,+r.v||1));
   return `<div class="${cls}"><span class="r">${i+1}</span><span>${esc(r.n)}</span><span class="s">${r.s}</span><span class="m"><img src="${ICO(tier-1)}" style="width:18px;height:18px;vertical-align:middle" alt=""></span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
 $('bRank').onclick=()=>{if(state==='play')togglePause();openRank()};$('bRank2').onclick=openRank;$('bRank3').onclick=openRank;
 
