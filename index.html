@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792779000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792780000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MERGE PANG · 팡팡합체</title>
@@ -287,8 +287,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
  let sx=0,sy=0;if(shake>0){sx=(Math.random()*2-1)*5*shake;sy=(Math.random()*2-1)*5*shake}
  x.setTransform(SC,0,0,SC,OX+sx*SC,OY+sy*SC);
  // 바구니 안쪽
- const top=-OY/SC;const g=x.createLinearGradient(0,top,0,H);g.addColorStop(0,'#0c0f26');g.addColorStop(1,'#1a1f4a');x.fillStyle=g;x.fillRect(0,top,W,H-top);
- x.strokeStyle='rgba(160,180,255,.06)';x.lineWidth=1;for(let yy=H-14;yy>top;yy-=14){x.beginPath();x.moveTo(0,yy);x.lineTo(W,yy);x.stroke()}
+ const top=-OY/SC;x.fillStyle='#13173a';x.fillRect(0,top,W,H-top); // 단색 배경
  x.fillStyle='#3a3f80';x.fillRect(-4,top,4,H-top);x.fillRect(W,top,4,H-top);x.fillRect(-4,H,W+8,4);
  // 위험선
  const danger=state==='play'&&warnT>0;x.strokeStyle=danger&&Math.floor(tGame*6)%2?'#ff5a6e':'rgba(170,190,255,.3)';x.lineWidth=danger?2:1;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,TOP);x.lineTo(W,TOP);x.stroke();x.setLineDash([]);
