@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792812000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792814000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -289,7 +289,7 @@ function addPiece(k,px,py,vy){const r=TR[k],O={restitution:.05,friction:.08,fric
  b.tier=k;b.born=tGame;b.over=0;b.pop=tGame;b.blink=Math.random()*4;if(vy)Body.setVelocity(b,{x:0,y:vy});Composite.add(engine.world,b);bodies.push(b);return b}
 function startGame(m){if(m)MODE=m;hearts=0;auroras=0;clearT=0;score=0;maxTier=0;combo=0;FX=[];overT=0;warnT=0;tGame=0;newWorld();cur=pick();nxt=pick();aimX=W/2;dropT=0;lastDrop=null;state='play';
  ['ovTitle','ovOver','ovPause','ovRank','ovMode'].forEach(hide);$('field').classList.remove('dead');hud();unlock();bgmStart();drawNext()}
-function drop(){if(state!=='play'||dropT>0)return;const r=TR[cur];const px=Math.max(r+1,Math.min(W-r-1,aimX));lastDrop=addPiece(cur,px,holdY(r),2);sfx.drop();buzz(8);cur=nxt;nxt=pick();dropT=.5;drawNext()}
+function drop(){if(state!=='play'||dropT>0)return;const r=TR[cur];let px=Math.max(r+1,Math.min(W-r-1,aimX));const fx=freeX(px,r);if(fx!=null)px=fx; /* 막힌 자리면 가장 가까운 빈자리로 */lastDrop=addPiece(cur,px,holdY(r),2);sfx.drop();buzz(8);cur=nxt;nxt=pick();dropT=.5;drawNext()}
 function doMerges(){if(!mergeQ.length)return;const done=new Set();
  for(const [a,b] of mergeQ){if(done.has(a)||done.has(b)||a.gone||b.gone)continue;done.add(a);done.add(b);a.gone=b.gone=1;Composite.remove(engine.world,[a,b]);bodies=bodies.filter(o=>o!==a&&o!==b);
   const k=a.tier,mx=(a.position.x+b.position.x)/2,my=(a.position.y+b.position.y)/2;
@@ -304,10 +304,14 @@ function doMerges(){if(!mergeQ.length)return;const done=new Set();
  mergeQ=[];hud()}
 function colorOf(k){return FR[k][1]}
 function burst(px,py,col,n,big){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
-function checkOver(dt){let worst=0;for(const b of bodies){if(b===lastDrop&&tGame-b.born<1.2)continue;if(tGame-b.born<.8)continue;
-  if(b.position.y-TR[b.tier]<LIMY()&&Math.abs(b.velocity.y)<1.5){b.over+=dt} /* 좌우로 움직이는 대기 구슬 줄(보이지 않는 선)까지 가득 차서 버틸 때만 */else b.over=Math.max(0,b.over-dt*2);worst=Math.max(worst,b.over)}
- if(worst>.5){warnT+=dt;if(Math.floor(warnT*4)!==Math.floor((warnT-dt)*4))sfx.warn()}else warnT=0;
- if(worst>2.2)gameOver();return worst}
+/* 대기 구슬 줄(보이지 않는 선)에서 반지름 r 구슬이 들어갈 자리가 있는지: 조준 위치에서 가까운 빈자리 x, 없으면 null */
+function hitAt(x,y,r){for(const b of bodies){const ps=b.parts.length>1?b.parts.slice(1):[b];for(const q of ps){const rr=q.circleRadius||Math.max(...q.vertices.map(v=>Math.hypot(v.x-q.position.x,v.y-q.position.y)))*.9;if(Math.hypot(x-q.position.x,y-q.position.y)<r+rr-1)return true}}return false}
+function freeX(px,r){const y=holdY(r),lo=r+1,hi=W-r-1;px=Math.max(lo,Math.min(hi,px));for(let d=0;d<=W;d+=2){for(const x of d?[px-d,px+d]:[px]){if(x<lo||x>hi)continue;if(!hitAt(x,y,r))return x}}return null}
+/* 끝: 선에 닿았다고 끝나지 않음. 줄 어디에도 다음 구슬을 넣을 자리가 없는 상태가 1.5초 이어지면 끝 */
+function checkOver(dt){const full=freeX(aimX,TR[cur])===null;
+ if(full){overT+=dt;warnT+=dt;for(const b of bodies)b.over=1;if(Math.floor(warnT*4)!==Math.floor((warnT-dt)*4))sfx.warn()}
+ else{if(overT>0)for(const b of bodies)b.over=0;overT=0;warnT=0}
+ if(overT>1.5)gameOver();return overT}
 /* 타임어택: 오로라 볼 완성 = 클리어 */
 function clearGame(){if(state!=='play')return;state='over';clearT=tGame;bgmStop();setTimeout(showOver,1500)}
 const fmtT=t=>{const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(2)};
@@ -327,7 +331,7 @@ function showOver(){let rec;const tOk=MODE==='time'&&clearT>0;
 /* ===== 그리기 ===== */
 function resize(){const r=$('field').getBoundingClientRect();dpr=Math.min(3,devicePixelRatio||1);cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);SC=Math.min(cv.width/W,cv.height/H);OX=(cv.width-W*SC)/2;OY=(cv.height-H*SC);VT=-OY/SC;draw(0)}
 function LIMY(){let m=0;for(let k=0;k<5;k++)m=Math.max(m,holdY(TR[k])+TR[k]);return m+2} // 대기 구슬 줄 바로 아래
-function holdY(r){return Math.max(VT+r+4,Math.min(TOP-r-6,TOP-r-34))} // 떨어뜨릴 구슬 대기 위치 (더 높게)
+function holdY(r){return Math.max(VT+r+4,Math.min(TOP-r-34,VT+r+14))} /* 대기 줄 = 보이는 칸 맨 위 바로 아래 (긴 화면에서도 위 공간을 다 씀) */ // 떨어뜨릴 구슬 대기 위치 (더 높게)
 addEventListener('resize',resize);if(window.visualViewport)visualViewport.addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(resize).observe($('field'));
 function drawPiece(k,px,py,ang,mood,sc,alpha){const im=BASE[k],fc=FACE[(mood||'')+k]||FACE[''+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.rotate(k>=HK?0:(ang||0));x.drawImage(fc,-s/2,-s/2,s,s);x.restore()}
 function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0,0,cv.width,cv.height);
@@ -351,7 +355,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
   x.globalAlpha=Math.max(0,Math.min(1,f.l*2.2));const w=im.width/SC,px=Math.max(w/2+2,Math.min(W-w/2-2,f.x));x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+(px-w/2)*SC),Math.round(OY+f.y*SC-im.height/2));x.restore();x.globalAlpha=1;continue}
   f.vy+=300*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.97;x.globalAlpha=Math.max(0,f.l*1.6);x.fillStyle=f.c;x.fillRect(f.x,f.y,f.s,f.s);x.globalAlpha=1}
  FX=FX.filter(f=>f.l>0);
- if(state==='play'&&warnT>.3){const im=pixText('DANGER!','#ff5a6e',Math.max(2,Math.round(2*SC)));if(Math.floor(tGame*4)%2){x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+W/2*SC-im.width/2),Math.round(OY+(TOP-56)*SC-im.height/2));x.restore()}}}
+ if(state==='play'&&warnT>.3){const im=pixText('DANGER!','#ff5a6e',Math.max(2,Math.round(2*SC)));if(Math.floor(tGame*4)%2){x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+W/2*SC-im.width/2),Math.round(OY+(LIMY()+40)*SC-im.height/2));x.restore()}}}
 function drawNext(){const c=$('nextC'),g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);const im=IMG[''+nxt];if(!im)return;g.clearRect(0,0,c.width,c.height);const s=(30+nxt*7)*1.5;g.drawImage(im,(c.width-s)/2,(c.height-s)/2,s,s)}
 
 /* ===== 조작: 손가락으로 위치 고르고, 떼면 떨어뜨리기 ===== */
