@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792810000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792811000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -285,7 +285,7 @@ function heartBody(px,py,r,o){const f=(r-OLW)/17.6,m=OLW,P=(x,y)=>({x:px+(x-20)*
  const b=Body.create(Object.assign({parts:[Bodies.circle(lo.x,lo.y,lr,o),Bodies.circle(ro.x,ro.y,lr,o),Bodies.fromVertices(c.x,c.y,[pts],o)]},o));
  Body.setInertia(b,Infinity); // 하트는 굴러 넘어지지 않고 늘 똑바로 (그림과 판정 일치)
  b.off={x:px-b.position.x,y:py-b.position.y};return b}
-function addPiece(k,px,py,vy){const r=TR[k],O={restitution:.1,friction:.3,frictionStatic:.6,frictionAir:.006,density:.0012,slop:.01,label:'p'},b=k===HK?heartBody(px,py,r,O):Bodies.circle(px,py,r,O);
+function addPiece(k,px,py,vy){const r=TR[k],O={restitution:.05,friction:.08,frictionStatic:.15,frictionAir:.006,density:.0012,slop:.01,label:'p'},b=k===HK?heartBody(px,py,r-1,O):Bodies.circle(px,py,r-1,O); /* 미끄러워서 빈틈으로 잘 들어가고, 판정을 살짝 작게 해서 테두리끼리 딱 붙음 */
  b.tier=k;b.born=tGame;b.over=0;b.pop=tGame;b.blink=Math.random()*4;if(vy)Body.setVelocity(b,{x:0,y:vy});Composite.add(engine.world,b);bodies.push(b);return b}
 function startGame(m){if(m)MODE=m;hearts=0;auroras=0;clearT=0;score=0;maxTier=0;combo=0;FX=[];overT=0;warnT=0;tGame=0;newWorld();cur=pick();nxt=pick();aimX=W/2;dropT=0;lastDrop=null;state='play';
  ['ovTitle','ovOver','ovPause','ovRank','ovMode'].forEach(hide);$('field').classList.remove('dead');hud();unlock();bgmStart();drawNext()}
@@ -305,7 +305,7 @@ function doMerges(){if(!mergeQ.length)return;const done=new Set();
 function colorOf(k){return FR[k][1]}
 function burst(px,py,col,n,big){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
 function checkOver(dt){let worst=0;for(const b of bodies){if(b===lastDrop&&tGame-b.born<1.2)continue;if(tGame-b.born<.8)continue;
-  if(b.position.y-TR[b.tier]<VT+4&&Math.abs(b.velocity.y)<1.5){b.over+=dt} /* 맨 위까지 가득 차서 버틸 때만 (점선 넘는 걸로는 안 끝남) */else b.over=Math.max(0,b.over-dt*2);worst=Math.max(worst,b.over)}
+  if(b.position.y-TR[b.tier]<LIMY()&&Math.abs(b.velocity.y)<1.5){b.over+=dt} /* 좌우로 움직이는 대기 구슬 줄(보이지 않는 선)까지 가득 차서 버틸 때만 */else b.over=Math.max(0,b.over-dt*2);worst=Math.max(worst,b.over)}
  if(worst>.5){warnT+=dt;if(Math.floor(warnT*4)!==Math.floor((warnT-dt)*4))sfx.warn()}else warnT=0;
  if(worst>2.2)gameOver();return worst}
 /* 타임어택: 오로라 볼 완성 = 클리어 */
@@ -326,6 +326,7 @@ function showOver(){let rec;const tOk=MODE==='time'&&clearT>0;
 
 /* ===== 그리기 ===== */
 function resize(){const r=$('field').getBoundingClientRect();dpr=Math.min(3,devicePixelRatio||1);cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);SC=Math.min(cv.width/W,cv.height/H);OX=(cv.width-W*SC)/2;OY=(cv.height-H*SC);VT=-OY/SC;draw(0)}
+function LIMY(){let m=0;for(let k=0;k<5;k++)m=Math.max(m,holdY(TR[k])+TR[k]);return m+2} // 대기 구슬 줄 바로 아래
 function holdY(r){return Math.max(VT+r+4,Math.min(TOP-r-6,TOP-r-34))} // 떨어뜨릴 구슬 대기 위치 (더 높게)
 addEventListener('resize',resize);if(window.visualViewport)visualViewport.addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(resize).observe($('field'));
 function drawPiece(k,px,py,ang,mood,sc,alpha){const im=BASE[k],fc=FACE[(mood||'')+k]||FACE[''+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.rotate(k>=HK?0:(ang||0));x.drawImage(fc,-s/2,-s/2,s,s);x.restore()}
@@ -336,7 +337,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
  const top=-OY/SC;x.fillStyle='#13173a';x.fillRect(0,top,W,H-top); // 단색 배경
  x.fillStyle='#3a3f80';x.fillRect(-4,top,4,H-top);x.fillRect(W,top,4,H-top);x.fillRect(-4,H,W+8,4);
  // 위험선
- const danger=state==='play'&&warnT>0;if(danger&&Math.floor(tGame*6)%2){x.strokeStyle='#ff5a6e';x.lineWidth=3;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,VT+2);x.lineTo(W,VT+2);x.stroke();x.setLineDash([])} /* 점선 없앰: 가득 찰 때만 맨 위가 깜빡 */
+ const danger=state==='play'&&warnT>0;if(danger&&Math.floor(tGame*6)%2){x.strokeStyle='#ff5a6e';x.lineWidth=3;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,LIMY());x.lineTo(W,LIMY());x.stroke();x.setLineDash([])} /* 점선 없앰: 가득 찰 때만 맨 위가 깜빡 */
  // 떨어뜨릴 위치 안내 + 지금 팡팡이
  if(state==='play'){const r=TR[cur],px=Math.max(r+1,Math.min(W-r-1,aimX));  drawPiece(cur,px,holdY(r),0,'',1,dropT>0?.45:1)}
  // 팡팡이들
