@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792807000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792808000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -264,7 +264,7 @@ const hapEl=(()=>{try{const l=document.createElement('label');l.style.cssText='p
 function buzz(p){try{if(navigator.vibrate){navigator.vibrate(p);return}if(hapEl)hapEl.click()}catch(e){}}
 
 /* ===== 물리 (Matter.js) ===== */
-const {Engine,Bodies,Composite,Body,Events}=Matter;
+const {Engine,Bodies,Composite,Body,Events,Vertices}=Matter;
 let MODE='score',hearts=0,auroras=0,clearT=0;
 let engine=null,bodies=[],state='title',score=0,best=0,cur=0,nxt=0,aimX=W/2,dropT=0,lastDrop=null,FX=[],shake=0,warnT=0,overT=0,combo=0,comboT=0,maxTier=0,lastWin=null,tGame=0,mergeQ=[];
 try{best=+localStorage.getItem('fruit-best')||0}catch(e){}
@@ -273,10 +273,19 @@ function newWorld(){engine=Engine.create();engine.gravity.y=1.15;engine.position
  const o={isStatic:true,friction:.3,restitution:.1,label:'wall'},T=60;
  Composite.add(engine.world,[Bodies.rectangle(W/2,H+T/2,W+2*T,T,o),Bodies.rectangle(-T/2,H/2,T,H*3,o),Bodies.rectangle(W+T/2,H/2,T,H*3,o)]);
  bodies=[];mergeQ=[];
- Events.on(engine,'collisionStart',ev=>{for(const p of ev.pairs){const a=p.bodyA,b=p.bodyB;if(a.tier!=null&&a.tier===b.tier)mergeQ.push([a,b]);
+ Events.on(engine,'collisionStart',ev=>{for(const p of ev.pairs){const a=p.bodyA.parent,b=p.bodyB.parent;if(a.tier!=null&&a.tier===b.tier)mergeQ.push([a,b]);
    const v=Math.hypot(a.velocity.x-b.velocity.x,a.velocity.y-b.velocity.y);if(v>2.5)sfx.bump(v)}});
- Events.on(engine,'collisionActive',ev=>{for(const p of ev.pairs){const a=p.bodyA,b=p.bodyB;if(a.tier!=null&&a.tier===b.tier)mergeQ.push([a,b])}})}
-function addPiece(k,px,py,vy){const r=TR[k],b=Bodies.circle(px,py,r,{restitution:.1,friction:.3,frictionStatic:.6,frictionAir:.006,density:.0012,slop:.01,label:'p'});
+ Events.on(engine,'collisionActive',ev=>{for(const p of ev.pairs){const a=p.bodyA.parent,b=p.bodyB.parent;if(a.tier!=null&&a.tier===b.tier)mergeQ.push([a,b])}})}
+/* 하트는 원 대신 실제 하트 모양으로 부딪힘: 위쪽 볼록한 원 2개 + 아래 뾰족한 다각형 */
+function heartBody(px,py,r,o){const f=(r-OLW)/17.6,m=OLW,P=(x,y)=>({x:px+(x-20)*f,y:py+(y-19)*f}),C=P(20,21);
+ const bz=(t,a,b,c,d)=>(1-t)**3*a+3*(1-t)**2*t*b+3*(1-t)*t*t*c+t**3*d,L=[];
+ for(let i=0;i<=6;i++){const t=i/6;L.push([bz(t,3.2,3.2,7.5,20),bz(t,15.2,22.5,29,35.5)])}
+ const pts=[...L,...L.slice(0,-1).reverse().map(([x,y])=>[40-x,y]),[20,9]].map(([x,y])=>{const q=P(x,y),dx=q.x-C.x,dy=q.y-C.y,d=Math.hypot(dx,dy)||1;return {x:q.x+dx/d*m,y:q.y+dy/d*m}});
+ const c=Vertices.centre(pts),lo=P(12.6,13.6),ro=P(27.4,13.6),lr=9.6*f+m;
+ const b=Body.create(Object.assign({parts:[Bodies.circle(lo.x,lo.y,lr,o),Bodies.circle(ro.x,ro.y,lr,o),Bodies.fromVertices(c.x,c.y,[pts],o)]},o));
+ Body.setInertia(b,Infinity); // 하트는 굴러 넘어지지 않고 늘 똑바로 (그림과 판정 일치)
+ b.off={x:px-b.position.x,y:py-b.position.y};return b}
+function addPiece(k,px,py,vy){const r=TR[k],O={restitution:.1,friction:.3,frictionStatic:.6,frictionAir:.006,density:.0012,slop:.01,label:'p'},b=k===HK?heartBody(px,py,r,O):Bodies.circle(px,py,r,O);
  b.tier=k;b.born=tGame;b.over=0;b.pop=tGame;b.blink=Math.random()*4;if(vy)Body.setVelocity(b,{x:0,y:vy});Composite.add(engine.world,b);bodies.push(b);return b}
 function startGame(m){if(m)MODE=m;hearts=0;auroras=0;clearT=0;score=0;maxTier=0;combo=0;FX=[];overT=0;warnT=0;tGame=0;newWorld();cur=pick();nxt=pick();aimX=W/2;dropT=0;lastDrop=null;state='play';
  ['ovTitle','ovOver','ovPause','ovRank','ovMode'].forEach(hide);$('field').classList.remove('dead');hud();unlock();bgmStart();drawNext()}
@@ -319,7 +328,7 @@ function showOver(){let rec;
 function resize(){const r=$('field').getBoundingClientRect();dpr=Math.min(3,devicePixelRatio||1);cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);SC=Math.min(cv.width/W,cv.height/H);OX=(cv.width-W*SC)/2;OY=(cv.height-H*SC);VT=-OY/SC;draw(0)}
 function holdY(r){return Math.max(VT+r+4,Math.min(TOP-r-6,TOP-r-34))} // 떨어뜨릴 구슬 대기 위치 (더 높게)
 addEventListener('resize',resize);if(window.visualViewport)visualViewport.addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(resize).observe($('field'));
-function drawPiece(k,px,py,ang,mood,sc,alpha){const im=BASE[k],fc=FACE[(mood||'')+k]||FACE[''+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.rotate(k===MAXK?0:(ang||0));x.drawImage(fc,-s/2,-s/2,s,s);x.restore()}
+function drawPiece(k,px,py,ang,mood,sc,alpha){const im=BASE[k],fc=FACE[(mood||'')+k]||FACE[''+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.rotate(k>=HK?0:(ang||0));x.drawImage(fc,-s/2,-s/2,s,s);x.restore()}
 function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0,0,cv.width,cv.height);
  let sx=0,sy=0;if(shake>0){sx=(Math.random()*2-1)*5*shake;sy=(Math.random()*2-1)*5*shake}
  x.setTransform(SC,0,0,SC,OX+sx*SC,OY+sy*SC);
@@ -334,7 +343,8 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
  const now=performance.now()/1000;
  for(const b of bodies){const k=b.tier,popS=Math.max(0,1-(tGame-b.pop)/.18);let mood='';
   if(b.over>.5)mood='x';else if((now+b.blink)%4<.14)mood='b';else if(b.speed>6)mood='o';
-  drawPiece(k,b.position.x,b.position.y,b.angle,mood,1+popS*.25)}
+  let bx=b.position.x,by=b.position.y;if(b.off){const c=Math.cos(b.angle),s=Math.sin(b.angle);bx+=b.off.x*c-b.off.y*s;by+=b.off.x*s+b.off.y*c} // 하트: 무게중심 → 그림 기준점
+  drawPiece(k,bx,by,b.angle,mood,1+popS*.25)}
  // 효과
  for(const f of FX){f.l-=dt;if(f.txt){f.y-=22*dt;const p=1-f.l/(f.L||1),pop=p<.12?.5+p/.12*.8:p<.22?1.3-(p-.12)/.1*.3:1,cell=Math.max(2,Math.round((f.big?3.2:2.4)*(f.sc||1)*pop*SC)),im=pixText(f.txt,f.c,cell); // 도트 그래픽 숫자 (화면 픽셀에 딱 맞게)
   x.globalAlpha=Math.max(0,Math.min(1,f.l*2.2));const w=im.width/SC,px=Math.max(w/2+2,Math.min(W-w/2-2,f.x));x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+(px-w/2)*SC),Math.round(OY+f.y*SC-im.height/2));x.restore();x.globalAlpha=1;continue}
