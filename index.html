@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792821000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792822000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -188,7 +188,7 @@ function face(g,s,fy,k){ // 단계마다 다른 표정 — 눈·입 모양만 �
   case 4:chev(-ex,ey,1);chev(ex,ey,-1);flat();break;              // >< 신남
   case 5:line(-ex,ey);line(ex,ey);flat();break;                // 흐뭇
   case 6:dot(-ex,ey);dot(ex,ey);g.beginPath();g.moveTo(-3*s,fy+2.6*s);g.quadraticCurveTo(-1.5*s,fy+4.8*s,0,fy+2.8*s);g.quadraticCurveTo(1.5*s,fy+4.8*s,3*s,fy+2.6*s);g.stroke();break; // 냥 (ω)
-  case 7:arc(-ex,ey+.6*s,0);arc(ex,ey+.6*s,0);puck();g.font='700 '+(4*s)+'px sans-serif';g.fillText('z',6.5*s,-7*s);g.font='700 '+(3*s)+'px sans-serif';g.fillText('z',9.5*s,-10*s);break; // 졸림
+  case 7:arc(-ex,ey+.6*s,0);arc(ex,ey+.6*s,0);puck();break; // 졸림
   case 8:dot(-ex,ey,2.2);dot(ex,ey,2.2);g.fillStyle='#fff';for(const sx of[-1,1]){g.beginPath();g.arc(sx*ex-.7*s,ey+1*s,.45*s,0,7);g.fill()}g.fillStyle=o;smile(3.4,2.4);break; // 하트: 반짝 방긋
   default:arc(-ex,ey,1);arc(ex,ey,1);open(3.6,5.2) // 오로라: 헤헤 활짝
  }}
