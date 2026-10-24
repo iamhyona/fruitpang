@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792808000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792809000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -151,7 +151,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 const RANK_URL='https://script.google.com/macros/s/AKfycbzkdjVleobj98oyxlC77cUf5txCRiSB6D1zgRWU56pX22ElXAx9R8xFRGnV0nKAUbwC/exec';
 const $=id=>document.getElementById(id);
 const cv=$('cv'),x=cv.getContext('2d');
-const W=300,H=470,TOP=78; // 고정 좌표계 · TOP 위로 넘치면 위험선
+const W=300,H=470,TOP=78; // 고정 좌표계 · TOP: 떨어뜨릴 구슬 대기 위치 기준
 let SC=1,OX=0,OY=0,dpr=1,VT=0;
 /* ===== 구슬 팡팡이 — 단계마다 표정만 다르게, 크기만 커지고 테두리 두께는 같게 ===== */
 const NAME=['빨강','주황','노랑','연두','초록','하늘','파랑','보라','하트','오로라'];
@@ -305,7 +305,7 @@ function doMerges(){if(!mergeQ.length)return;const done=new Set();
 function colorOf(k){return FR[k][1]}
 function burst(px,py,col,n,big){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
 function checkOver(dt){let worst=0;for(const b of bodies){if(b===lastDrop&&tGame-b.born<1.2)continue;if(tGame-b.born<.8)continue;
-  if(b.position.y-TR[b.tier]<TOP&&Math.abs(b.velocity.y)<1.5){b.over+=dt}else b.over=Math.max(0,b.over-dt*2);worst=Math.max(worst,b.over)}
+  if(b.position.y-TR[b.tier]<VT+4&&Math.abs(b.velocity.y)<1.5){b.over+=dt} /* 맨 위까지 가득 차서 버틸 때만 (점선 넘는 걸로는 안 끝남) */else b.over=Math.max(0,b.over-dt*2);worst=Math.max(worst,b.over)}
  if(worst>.5){warnT+=dt;if(Math.floor(warnT*4)!==Math.floor((warnT-dt)*4))sfx.warn()}else warnT=0;
  if(worst>2.2)gameOver();return worst}
 /* 타임어택: 오로라 볼 완성 = 클리어 */
@@ -316,7 +316,7 @@ function gameOver(){if(state!=='play')return;state='over';bgmStop();sfx.over();b
 function showOver(){let rec;
  if(MODE==='time'){const ok=clearT>0,cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem('fruit-bestT')||0}catch(e){}const nb=ok&&(!bt||cs<bt);if(nb)try{localStorage.setItem('fruit-bestT',cs)}catch(e){}
   $('overTitle').textContent=ok?'AURORA CLEAR!':'TIME OVER';$('overScore').textContent=ok?fmtT(clearT):'—';
-  $('overInfo').textContent=ok?('오로라 볼 완성 시간'+(nb?' · NEW BEST!':bt?' · 최고 '+fmtT(bt/100):'')):'오로라 볼을 만들기 전에 넘쳤어요 · 최고 단계 '+NAME[maxTier];
+  $('overInfo').textContent=ok?('오로라 볼 완성 시간'+(nb?' · NEW BEST!':bt?' · 최고 '+fmtT(bt/100):'')):'오로라 볼을 만들기 전에 가득 찼어요 · 최고 단계 '+NAME[maxTier];
   rec={score:ok?cs:0,stage:maxTier+1,mode:'time',saved:!ok}}
  else{const bonus=hearts*BON_H+auroras*BON_A,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem('fruit-best',best)}catch(e){}}
   $('overTitle').textContent='GAME OVER';$('overScore').textContent=total.toLocaleString();
@@ -336,7 +336,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
  const top=-OY/SC;x.fillStyle='#13173a';x.fillRect(0,top,W,H-top); // 단색 배경
  x.fillStyle='#3a3f80';x.fillRect(-4,top,4,H-top);x.fillRect(W,top,4,H-top);x.fillRect(-4,H,W+8,4);
  // 위험선
- const danger=state==='play'&&warnT>0;x.strokeStyle=danger&&Math.floor(tGame*6)%2?'#ff5a6e':'rgba(170,190,255,.3)';x.lineWidth=danger?2:1;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,TOP);x.lineTo(W,TOP);x.stroke();x.setLineDash([]);
+ const danger=state==='play'&&warnT>0;if(danger&&Math.floor(tGame*6)%2){x.strokeStyle='#ff5a6e';x.lineWidth=3;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,VT+2);x.lineTo(W,VT+2);x.stroke();x.setLineDash([])} /* 점선 없앰: 가득 찰 때만 맨 위가 깜빡 */
  // 떨어뜨릴 위치 안내 + 지금 팡팡이
  if(state==='play'){const r=TR[cur],px=Math.max(r+1,Math.min(W-r-1,aimX));  drawPiece(cur,px,holdY(r),0,'',1,dropT>0?.45:1)}
  // 팡팡이들
@@ -386,7 +386,7 @@ function toMenu(){['ovPause','ovOver','ovRank'].forEach(hide);$('field').classLi
 $('bMenu').onclick=toMenu;$('bMenu2').onclick=toMenu;
 $('bSound').onclick=()=>{sound=!sound;$('bSound').classList.toggle('on',sound);if(ac&&master)master.gain.value=sound?1:0;if(sound&&state==='play')bgmStart()};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')togglePause()});
-const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>빨강 → … → 하트 → 마지막은 오로라 볼!<br>TIME ATTACK: 오로라 볼을 최대한 빨리<br>SCORE: 점수 + 하트·오로라 보너스<br>점선 위로 넘치면 게임 끝!","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
+const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>빨강 → … → 하트 → 마지막은 오로라 볼!<br>TIME ATTACK: 오로라 볼을 최대한 빨리<br>SCORE: 점수 + 하트·오로라 보너스<br>맨 위까지 가득 차면 게임 끝!","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
 $('bStart').onclick=()=>{unlock();show('ovMode')}; // 모드 고르기
 const goMode=m=>{unlock();hide('ovMode');phTut('fruit-tut',TUT,()=>startGame(m))};
 $('bModeT').onclick=()=>goMode('time');$('bModeS').onclick=()=>goMode('score');
