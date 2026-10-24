@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792818000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792820000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -310,10 +310,11 @@ function doMerges(){if(!mergeQ.length)return;const done=new Set();
 function colorOf(k){return FR[k][1]}
 function burst(px,py,col,n,big){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
 /* 대기 구슬 줄(보이지 않는 선)에서 반지름 r 구슬이 들어갈 자리가 있는지: 조준 위치에서 가까운 빈자리 x, 없으면 null */
-function hitAt(x,y,r){for(const b of bodies){const ps=b.parts.length>1?b.parts.slice(1):[b];for(const q of ps){const rr=q.circleRadius||Math.max(...q.vertices.map(v=>Math.hypot(v.x-q.position.x,v.y-q.position.y)))*.9;if(Math.hypot(x-q.position.x,y-q.position.y)<r+rr-1)return true}}return false}
-function freeX(px,r){const y=holdY(r),lo=r+1,hi=W-r-1;px=Math.max(lo,Math.min(hi,px));for(let d=0;d<=W;d+=2){for(const x of d?[px-d,px+d]:[px]){if(x<lo||x>hi)continue;if(!hitAt(x,y,r))return x}}return null}
-/* 끝: 선에 닿았다고 끝나지 않음. 줄 어디에도 다음 구슬을 넣을 자리가 없는 상태가 1.5초 이어지면 끝 */
-function checkOver(dt){const full=freeX(aimX,TR[cur])===null;
+function hitAt(x,y,r){for(const b of bodies){const ps=b.parts.length>1?b.parts.slice(1):[b];for(const q of ps){const rr=q.circleRadius||Math.max(...q.vertices.map(v=>Math.hypot(v.x-q.position.x,v.y-q.position.y)))*.9;if(Math.hypot(x-q.position.x,y-q.position.y)<r+rr-1.5)return true}}return false}
+function LINEY(){return holdY(TR[0])+TR[0]} /* 보이지 않는 그리드 선 = 대기 구슬 줄 아래쪽 */
+function freeX(px,r){const y=LINEY()+r,lo=r+1,hi=W-r-1; /* 선 바로 아래에 구슬이 들어갈 빈 곳이 있는지 */px=Math.max(lo,Math.min(hi,px));for(let d=0;d<=W;d+=2){for(const x of d?[px-d,px+d]:[px]){if(x<lo||x>hi)continue;if(!hitAt(x,y,r))return x}}return null}
+/* 끝: 선에 닿았다고 끝나지 않음. 선 아래 어디에도 구슬이 들어갈 틈이 없는 상태가 1.5초 이어지면 끝 */
+function checkOver(dt){const full=freeX(aimX,TR[0])===null; /* 가장 작은 구슬도 선 아래에 들어갈 틈이 없을 때 = 다 참 */
  if(full){overT+=dt;warnT+=dt;for(const b of bodies)b.over=1;if(Math.floor(warnT*4)!==Math.floor((warnT-dt)*4))sfx.warn()}
  else{if(overT>0)for(const b of bodies)b.over=0;overT=0;warnT=0}
  if(overT>1.5)gameOver();return overT}
