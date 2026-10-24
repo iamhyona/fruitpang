@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792822000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792823000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -150,7 +150,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
   </div></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
-<script src="../games/ph.js?v=6"></script>
+<script src="../games/ph.js?v=12"></script>
 <script>
 (()=>{
 const RANK_URL='https://script.google.com/macros/s/AKfycbzkdjVleobj98oyxlC77cUf5txCRiSB6D1zgRWU56pX22ElXAx9R8xFRGnV0nKAUbwC/exec';
@@ -239,9 +239,9 @@ function shade(h){const n=parseInt(h.slice(1),16),f=v=>Math.round(v*.72);return 
 /* ===== 소리 ===== */
 let ac,sound=true,master=null;
 function silentWav(){const n=800,b=new ArrayBuffer(44+n),v=new DataView(b),w=(o,t)=>[...t].forEach((ch,i)=>v.setUint8(o+i,ch.charCodeAt(0)));w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,"data");v.setUint32(40,n,true);for(let i=0;i<n;i++)v.setUint8(44+i,128);return new Blob([b],{type:"audio/wav"})}
-function unlock(){try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){} /* 아이폰 무음 스위치에도 소리 나게 */
+function unlock(){try{if(navigator.audioSession)navigator.audioSession.type='ambient'}catch(e){} /* 아이폰 무음 스위치에도 소리 나게 */
  try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state!=='running')ac.resume();const bf=ac.createBuffer(1,1,22050),s=ac.createBufferSource();s.buffer=bf;s.connect(ac.destination);s.start(0)}catch(e){}
- if(!window._sa){try{const a=new Audio(URL.createObjectURL(silentWav()));a.loop=true;a.setAttribute('playsinline','');a.play().catch(()=>{});window._sa=a}catch(e){}}}
+ if(false&&!window._sa){try{const a=new Audio(URL.createObjectURL(silentWav()));a.loop=true;a.setAttribute('playsinline','');a.play().catch(()=>{});window._sa=a}catch(e){}}}
 ['pointerdown','touchend','keydown'].forEach(t=>addEventListener(t,()=>{if(!ac||ac.state!=='running')unlock()},{passive:true}));
 function out(){if(!master||master.context!==ac){master=ac.createGain();master.connect(ac.destination)}master.gain.value=sound?1:0;return master}
 function tone(type,f1,f2,dur,vol,delay){if(!ac||!sound)return;const t=ac.currentTime+(delay||0),o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f1,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(out());o.start(t);o.stop(t+dur+.02)}
