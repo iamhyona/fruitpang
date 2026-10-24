@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792809000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792810000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -313,16 +313,16 @@ function clearGame(){if(state!=='play')return;state='over';clearT=tGame;bgmStop(
 const fmtT=t=>{const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(2)};
 const BON_H=300,BON_A=2000; // 스코어 모드 보너스: 하트 1개 300점, 오로라 1개 2000점
 function gameOver(){if(state!=='play')return;state='over';bgmStop();sfx.over();buzz([60,40,100]);$('field').classList.add('dead');setTimeout(showOver,1200)}
-function showOver(){let rec;
- if(MODE==='time'){const ok=clearT>0,cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem('fruit-bestT')||0}catch(e){}const nb=ok&&(!bt||cs<bt);if(nb)try{localStorage.setItem('fruit-bestT',cs)}catch(e){}
-  $('overTitle').textContent=ok?'AURORA CLEAR!':'TIME OVER';$('overScore').textContent=ok?fmtT(clearT):'—';
-  $('overInfo').textContent=ok?('오로라 볼 완성 시간'+(nb?' · NEW BEST!':bt?' · 최고 '+fmtT(bt/100):'')):'오로라 볼을 만들기 전에 가득 찼어요 · 최고 단계 '+NAME[maxTier];
-  rec={score:ok?cs:0,stage:maxTier+1,mode:'time',saved:!ok}}
- else{const bonus=hearts*BON_H+auroras*BON_A,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem('fruit-best',best)}catch(e){}}
-  $('overTitle').textContent='GAME OVER';$('overScore').textContent=total.toLocaleString();
-  $('overInfo').innerHTML=`기본 ${score.toLocaleString()} + 하트 ${hearts}개 ${(hearts*BON_H).toLocaleString()} + 오로라 ${auroras}개 ${(auroras*BON_A).toLocaleString()}`+(nb?'<br>NEW BEST!':'');
+function showOver(){let rec;const tOk=MODE==='time'&&clearT>0;
+ if(tOk){const cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem('fruit-bestT')||0}catch(e){}const nb=!bt||cs<bt;if(nb)try{localStorage.setItem('fruit-bestT',cs)}catch(e){}
+  $('overTitle').textContent='AURORA CLEAR!';$('overScore').textContent=fmtT(clearT);$('overInfo').textContent=nb?'NEW BEST!':'';
+  rec={score:cs,stage:maxTier+1,mode:'time',saved:false}}
+ else{ /* 스코어 모드, 또는 타임어택 실패 → 점수로 기록 (SCORE 랭킹) */
+  const bonus=hearts*BON_H+auroras*BON_A,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem('fruit-best',best)}catch(e){}}
+  $('overTitle').textContent=MODE==='time'?'TIME OVER':'GAME OVER';$('overScore').textContent=total.toLocaleString();
+  $('overInfo').innerHTML=(bonus?`${score.toLocaleString()} + ♥${hearts} ${(hearts*BON_H).toLocaleString()}`+(auroras?` + AURORA ${auroras} ${(auroras*BON_A).toLocaleString()}`:''):'')+(nb?(bonus?'<br>':'')+'NEW BEST!':'');
   rec={score:total,stage:maxTier+1,mode:'score',saved:total<=0}}
- lastWin=rec;$('bSave').textContent=rec.saved?'—':'OK';$('bSave').disabled=rec.saved;$('nameIn').value=localStorage.getItem('fruit-name')||'';show('ovOver')}
+ lastWin=rec;$('bSave').textContent='OK';$('bSave').disabled=rec.saved;$('nameIn').value=localStorage.getItem('fruit-name')||'';show('ovOver')}
 
 /* ===== 그리기 ===== */
 function resize(){const r=$('field').getBoundingClientRect();dpr=Math.min(3,devicePixelRatio||1);cv.width=Math.max(1,r.width*dpr);cv.height=Math.max(1,r.height*dpr);SC=Math.min(cv.width/W,cv.height/H);OX=(cv.width-W*SC)/2;OY=(cv.height-H*SC);VT=-OY/SC;draw(0)}
