@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792815000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792817000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -98,6 +98,11 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 <style>html,body{height:var(--app-h,100dvh)!important}</style>
 <link rel="stylesheet" href="../games/ph.css?v=7"><style>#ovTitle{padding:0!important}
 .nextc{width:34px;height:34px;display:block}
+.go{font:700 38px "Silkscreen",monospace;color:#ff5a6e;text-shadow:0 0 12px rgba(255,90,110,.6);line-height:1.1;text-align:center;letter-spacing:.05em;margin-bottom:4px}.go.ok{color:#7ef0d0;text-shadow:0 0 12px rgba(126,240,208,.6)}
+.st{display:grid;grid-template-columns:1.5fr 1fr 1fr;width:min(290px,100%);border:3px solid var(--gb);border-radius:10px;background:#10132b}
+.st>div{text-align:center;padding:10px 2px 11px;font:700 9px "Silkscreen",monospace;letter-spacing:.06em;color:var(--g2)}.st>div+div{border-left:2px solid var(--gb)}
+.st b{display:block;margin-top:9px;font:400 13px "Press Start 2P",monospace;color:#fff;letter-spacing:0;white-space:nowrap}.st>div:first-child b{font-size:15px}
+.st .nb{color:#ffd23f}
 #ovMode .phS-b{width:232px;max-width:100%;height:52px;border:3px solid #10b870;box-shadow:inset 0 0 0 3px #0b1611,inset 0 0 0 5px rgba(16,184,112,.16);background:#0b1611;color:#9ff0c6;font:700 14px "Silkscreen",monospace;letter-spacing:.18em;border-radius:0;display:flex;align-items:center;justify-content:center}#ovMode .phS-b:active{transform:translateY(2px)}#ovMode .phS-b.yl{border-color:#d9a400;color:#ffd23f;background:#1a1505;box-shadow:inset 0 0 0 3px #1a1505,inset 0 0 0 5px rgba(242,176,0,.16)}
 .rtab{display:flex;gap:6px;margin:-2px 0 10px;width:min(290px,100%)}.rtab button{flex:1;white-space:nowrap;font-family:"Silkscreen",var(--f);font-weight:700;font-size:10px;letter-spacing:.08em;padding:7px 4px;border-radius:8px;border:2px solid var(--gb);background:transparent;color:var(--g2);cursor:pointer}.rtab button.on{background:#f2b000;border-color:#f2b000;color:#111}
 .hud .box small{margin:0 4px 0 0}
@@ -128,9 +133,9 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
       <button class="btn" id="bMenu">MAIN MENU</button>
     </div>
     <div class="ov" id="ovOver">
-      <div class="sub" id="overTitle">GAME OVER</div>
-      <div class="big" id="overScore">0</div>
-      <div class="msg" id="overInfo"></div>
+      <div class="go" id="overTitle">GAME<br>OVER</div>
+      <div class="st"><div><span id="stL">SCORE</span><b id="overScore">0</b></div><div>HEART<b id="stH">0</b></div><div>AURORA<b id="stA">0</b></div></div>
+      <div id="overInfo" hidden></div>
       <div class="row"><input id="nameIn" maxlength="8" placeholder="이름" autocomplete="off"><button id="bSave">OK</button></div>
       <button class="btn" id="bRetry">RETRY</button>
       <button class="btn" id="bMenu2">MAIN MENU</button>
@@ -319,13 +324,14 @@ const BON_H=300,BON_A=2000; // 스코어 모드 보너스: 하트 1개 300점, �
 function gameOver(){if(state!=='play')return;state='over';bgmStop();sfx.over();buzz([60,40,100]);$('field').classList.add('dead');setTimeout(showOver,1200)}
 function showOver(){let rec;const tOk=MODE==='time'&&clearT>0;
  if(tOk){const cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem('fruit-bestT')||0}catch(e){}const nb=!bt||cs<bt;if(nb)try{localStorage.setItem('fruit-bestT',cs)}catch(e){}
-  $('overTitle').textContent='AURORA CLEAR!';$('overScore').textContent=fmtT(clearT);$('overInfo').textContent=nb?'NEW BEST!':'';
+  $('overTitle').innerHTML='AURORA<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);
   rec={score:cs,stage:maxTier+1,mode:'time',saved:false}}
  else{ /* 스코어 모드, 또는 타임어택 실패 → 점수로 기록 (SCORE 랭킹) */
   const bonus=hearts*BON_H+auroras*BON_A,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem('fruit-best',best)}catch(e){}}
-  $('overTitle').textContent=MODE==='time'?'TIME OVER':'GAME OVER';$('overScore').textContent=total.toLocaleString();
+  $('overTitle').innerHTML=MODE==='time'?'TIME<br>OVER':'GAME<br>OVER';$('overTitle').classList.remove('ok');$('overScore').textContent=total.toLocaleString();$('stL').textContent=nb?'NEW BEST':'SCORE';$('stL').classList.toggle('nb',nb);
   $('overInfo').innerHTML=(bonus?`${score.toLocaleString()} + ♥${hearts} ${(hearts*BON_H).toLocaleString()}`+(auroras?` + AURORA ${auroras} ${(auroras*BON_A).toLocaleString()}`:''):'')+(nb?(bonus?'<br>':'')+'NEW BEST!':'');
   rec={score:total,stage:maxTier+1,mode:'score',saved:total<=0}}
+ $('stH').textContent=hearts;$('stA').textContent=auroras; /* 결과는 박스에 */
  lastWin=rec;$('bSave').textContent='OK';$('bSave').disabled=rec.saved;$('nameIn').value=localStorage.getItem('fruit-name')||'';show('ovOver')}
 
 /* ===== 그리기 ===== */
