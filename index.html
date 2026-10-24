@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792829000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1792830000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -85,7 +85,8 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .x{font:700 22px Silkscreen;color:#bfc3c9;padding:6px 14px;margin-top:4px}
 .list{width:min(290px,100%);max-height:52%;overflow:auto;border:3px solid var(--gb);border-radius:10px;background:#080a1c;text-align:left}
 .list div{display:grid;grid-template-columns:30px 1fr auto 40px;gap:6px;align-items:center;padding:8px 10px;font:13px Galmuri11,sans-serif;border-bottom:1px solid rgba(150,170,255,.08)}
-.list .r{color:var(--g2)} .list .s{font:700 13px Silkscreen;color:#fff} .list .m{font:700 8px Silkscreen;text-align:right}
+.list .r{color:var(--g2)}
+.list .lvb{font:700 7px Silkscreen,monospace;font-style:normal;letter-spacing:.06em;padding:2px 4px 1px;border-radius:3px;vertical-align:2px;margin-left:3px;color:#0a0c1d;background:#ffd23f}.list .lvb.e{background:#5fe08a}.list .lvb.h{background:#ff5a6e} .list .s{font:700 13px Silkscreen;color:#fff} .list .m{font:700 8px Silkscreen;text-align:right}
 .list .me{background:rgba(150,170,255,.12)}
 .list .em{display:block;text-align:center;color:var(--g2);padding:20px}
 .credit{font:12px/1.7 Galmuri11,sans-serif;color:rgba(220,226,255,.45);margin-top:8px}
@@ -105,6 +106,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .st .nb{color:#ffd23f}
 .nextb{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:4;width:150px;height:40px;border:3px solid #10b870;background:#0b1611;box-shadow:inset 0 0 0 3px #0b1611,inset 0 0 0 5px rgba(16,184,112,.16);color:#9ff0c6;font:400 13px "Silkscreen",monospace;letter-spacing:.18em;border-radius:0;animation:nb 1.2s steps(2) infinite}.nextb[hidden]{display:none}@keyframes nb{50%{opacity:.6}}
 #ovMode .phS-b{width:232px;max-width:100%;height:52px;border:3px solid #10b870;box-shadow:inset 0 0 0 3px #0b1611,inset 0 0 0 5px rgba(16,184,112,.16);background:#0b1611;color:#9ff0c6;font:700 14px "Silkscreen",monospace;letter-spacing:.18em;border-radius:0;display:flex;align-items:center;justify-content:center}#ovMode .phS-b:active{transform:translateY(2px)}#ovMode .phS-b.yl{border-color:#d9a400;color:#ffd23f;background:#1a1505;box-shadow:inset 0 0 0 3px #1a1505,inset 0 0 0 5px rgba(242,176,0,.16)}
+.rtab.lvs{width:232px;max-width:100%;margin:0 0 4px}
 .rtab{display:flex;gap:6px;margin:-2px 0 10px;width:min(290px,100%)}.rtab button{flex:1;white-space:nowrap;font-family:"Silkscreen",var(--f);font-weight:700;font-size:10px;letter-spacing:.08em;padding:7px 4px;border-radius:8px;border:2px solid var(--gb);background:transparent;color:var(--g2);cursor:pointer}.rtab button.on{background:#f2b000;border-color:#f2b000;color:#111}
 .hud .box small{margin:0 4px 0 0}
 </style></head>
@@ -123,6 +125,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 
     <div class="ov show" id="ovTitle"><div class="phS"><i class="phS-sp a"></i><div class="phS-logo" data-word="MARBLE|PANG"></div><div class="phS-show" id="show"></div><i class="phS-sp b"></i><div class="phS-btns"><button class="phS-b" id="bStart">START</button><button class="phS-b gold" id="bRank2">RANKING</button></div><i class="phS-sp c"></i><div class="phS-credit">이 게임은 서울 마포구에 사는 박현아가 만든<br>비상업용 게임이에요. 구슬 팡팡이들을 합쳐서<br>커다란 오로라 볼을 만들어 주세요.</div></div></div>
     <div class="ov" id="ovMode">
+      <div class="rtab lvs" id="lvSel"><button data-l="e">EASY</button><button data-l="n">NORMAL</button><button data-l="h">HARD</button></div>
       <button class="phS-b" id="bModeT">TIME ATTACK</button>
       <button class="phS-b yl" id="bModeS">SCORE</button>
       <button class="x" data-close="ovMode">✕</button>
@@ -135,7 +138,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
     </div>
     <div class="ov" id="ovOver">
       <div class="go" id="overTitle">GAME<br>OVER</div>
-      <div class="st"><div><span id="stL">SCORE</span><b id="overScore">0</b></div><div>HEART<b id="stH">0</b></div><div>AURORA<b id="stA">0</b></div></div>
+      <div class="st"><div><span id="stL">SCORE</span><b id="overScore">0</b></div><div>HEART<b id="stH">0</b></div><div><span id="stAL">AURORA</span><b id="stA">0</b></div></div>
       <div id="overInfo" hidden></div>
       <div class="row"><input id="nameIn" maxlength="8" placeholder="이름" autocomplete="off"><button id="bSave">OK</button></div>
       <button class="btn" id="bRetry">RETRY</button>
@@ -160,12 +163,14 @@ const cv=$('cv'),x=cv.getContext('2d');
 const W=300,H=470,TOP=78; // 고정 좌표계 · TOP: 떨어뜨릴 구슬 대기 위치 기준
 let SC=1,OX=0,OY=0,dpr=1,VT=0;
 /* ===== 구슬 팡팡이 — 단계마다 표정만 다르게, 크기만 커지고 테두리 두께는 같게 ===== */
-const NAME=['빨강','주황','노랑','연두','초록','하늘','파랑','보라','하트','오로라'];
-const GC=[['#ff4d5e','#ffb3b8','#b0182a'],['#ff9a2e','#ffd6a3','#c25a00'],['#ffd93a','#fff4b0','#c99a00'],['#b4e04a','#e9ffb0','#6f9a14'],['#34c46a','#a8f0c0','#14803a'],['#55ccff','#c4f0ff','#1688c4'],['#3d74ff','#b4c8ff','#1a3fb8'],['#9a5cff','#dcc4ff','#5a26b8'],['#ff6ec7','#ffd0ef','#c42a8a'],['#7ef0d0','#f0fffb','#5b4bd6']];
-const TR=[12,17,23,30,38,47,57,68,78,90]; // 반지름: 단계마다 확실히 커지게
-const TS=[1,3,6,10,15,21,28,36,45,66]; // 합쳐질 때 점수
-const MAXK=9,HK=8,Q=4,OLW=2.6,FCAP=(38-OLW)*Q/15; // FCAP: 눈코입은 초록(5단계) 크기에서 멈추고 몸만 커짐
-const FK=[1,1,.8,.8,.8,.8,1,1,1,1]; // 노랑·연두·초록·하늘은 눈코입 조금 작게 // OLW: 테두리 두께 (모든 크기에서 같음)
+const NAME=['빨강','주황','노랑','연두','초록','하늘','파랑','보라','하트','오로라','별'];
+const GC=[['#ff4d5e','#ffb3b8','#b0182a'],['#ff9a2e','#ffd6a3','#c25a00'],['#ffd93a','#fff4b0','#c99a00'],['#b4e04a','#e9ffb0','#6f9a14'],['#34c46a','#a8f0c0','#14803a'],['#55ccff','#c4f0ff','#1688c4'],['#3d74ff','#b4c8ff','#1a3fb8'],['#9a5cff','#dcc4ff','#5a26b8'],['#ff6ec7','#ffd0ef','#c42a8a'],['#7ef0d0','#f0fffb','#5b4bd6'],['#ffcf2e','#fff8c8','#d97a00']];
+const TR=[12,17,23,30,38,47,57,68,78,90,108]; // 반지름: 단계마다 확실히 커지게
+const TS=[1,3,6,10,15,21,28,36,45,66,90]; // 합쳐질 때 점수
+const MAXK=9,SK=10,HK=8,Q=4,OLW=2.6,FCAP=(38-OLW)*Q/15; // FCAP: 눈코입은 초록(5단계) 크기에서 멈추고 몸만 커짐
+const FK=[1,1,.8,.8,.8,.8,1,1,1,1,1];
+let LV='n';try{LV=localStorage.getItem('fruit-lv')||'n'}catch(e){} /* 난이도: e=하트까지 · n=오로라까지 · h=별까지 */
+const TOPK=()=>LV==='e'?HK:LV==='h'?SK:MAXK,LVM=(m,l)=>(l||LV)==='n'?m:m+'-'+(l||LV),BK=s=>'fruit-best'+(s||'')+(LV==='n'?'':'-'+LV); // 노랑·연두·초록·하늘은 눈코입 조금 작게 // OLW: 테두리 두께 (모든 크기에서 같음)
 const FR=GC.map((c,k)=>[NAME[k],c[0]]);
 function face(g,s,fy,k){ // 단계마다 다른 표정 — 눈·입 모양만 다르고 색은 하나로
  const o='#2a1712',ex=4.2*s,ey=-2*s+fy;g.fillStyle=g.strokeStyle=o;g.lineCap=g.lineJoin='round';g.lineWidth=1.5*s;
@@ -191,6 +196,7 @@ function face(g,s,fy,k){ // 단계마다 다른 표정 — 눈·입 모양만 �
   case 6:dot(-ex,ey);dot(ex,ey);g.beginPath();g.moveTo(-3*s,fy+2.6*s);g.quadraticCurveTo(-1.5*s,fy+4.8*s,0,fy+2.8*s);g.quadraticCurveTo(1.5*s,fy+4.8*s,3*s,fy+2.6*s);g.stroke();break; // 냥 (ω)
   case 7:arc(-ex,ey+.6*s,0);arc(ex,ey+.6*s,0);puck();break; // 졸림
   case 8:dot(-ex,ey,2.2);dot(ex,ey,2.2);g.fillStyle='#fff';for(const sx of[-1,1]){g.beginPath();g.arc(sx*ex-.7*s,ey+1*s,.45*s,0,7);g.fill()}g.fillStyle=o;smile(3.4,2.4);break; // 하트: 반짝 방긋
+  case 10:dot(-ex,ey,2.3);dot(ex,ey,2.3);g.fillStyle='#fff';for(const sx of[-1,1]){g.beginPath();g.arc(sx*ex-.8*s,ey+1*s,.5*s,0,7);g.fill()}g.fillStyle=o;open(3,4.4);break; // 별: 반짝 와아
   default:arc(-ex,ey,1);arc(ex,ey,1);open(3.6,5.2) // 오로라: 헤헤 활짝
  }}
 function moodFace(g,s,fy,k,mood){const o='#2a1712',ex=4.2*s,ey=-2*s+fy;g.fillStyle=g.strokeStyle=o;g.lineCap='round';
@@ -199,7 +205,8 @@ function moodFace(g,s,fy,k,mood){const o='#2a1712',ex=4.2*s,ey=-2*s+fy;g.fillSty
  if(mood==='b'){g.lineWidth=1.5*s;for(const sx of[-1,1]){g.beginPath();g.moveTo(sx*ex-1.8*s,ey);g.quadraticCurveTo(sx*ex,ey+1.5*s,sx*ex+1.8*s,ey);g.stroke()}g.save();g.beginPath();g.rect(-9*s,fy+.5*s,18*s,12*s);g.clip();face(g,s,fy,k);g.restore();return} // 눈 깜빡 (입은 그대로)
  face(g,s,fy,k)}
 const HEART=new Path2D('M20 35.5C7.5 29 3.2 22.5 3.2 15.2C3.2 8.6 7.6 4.2 13 4.2C16.3 4.2 18.7 6 20 8.6C21.3 6 23.7 4.2 27 4.2C32.4 4.2 36.8 8.6 36.8 15.2C36.8 22.5 32.5 29 20 35.5Z'); // 마지막 단계: 하트 구슬
-function shapeP(k,ri){const p=new Path2D();if(k===HK){const f=ri/17.6;p.addPath(HEART,new DOMMatrix([f,0,0,f,-20*f,-19*f]))}else p.arc(0,0,ri,0,7);return p}
+function starPts(ro,cx,cy){const a=[];for(let i=0;i<10;i++){const r=i%2?ro*.6:ro,t=-Math.PI/2+i*Math.PI/5;a.push([cx+r*Math.cos(t),cy+r*Math.sin(t)])}return a} /* 5각 별 꼭짓점 */
+function shapeP(k,ri){const p=new Path2D();if(k===SK){const P=starPts(ri,0,ri*.06),rr=ri*.13;p.moveTo((P[0][0]+P[1][0])/2,(P[0][1]+P[1][1])/2);for(let i=1;i<=10;i++){const a=P[i%10],b=P[(i+1)%10];p.arcTo(a[0],a[1],(a[0]+b[0])/2,(a[1]+b[1])/2,i%2?ri*.06:rr)}p.closePath()}else if(k===HK){const f=ri/17.6;p.addPath(HEART,new DOMMatrix([f,0,0,f,-20*f,-19*f]))}else p.arc(0,0,ri,0,7);return p}
 function fruitCanvas(k,mood,part){const r=TR[k],R=r*Q,ol=OLW*Q,D=Math.ceil(R*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');
  const [b,l,d]=GC[k],ri=R-ol,P=shapeP(k,ri); g.translate(D/2,D/2);g.lineJoin='round';
  g.lineWidth=ol*2;g.strokeStyle=g.fillStyle='#14102a';g.stroke(P);g.fill(P); // 바깥선: 크기와 상관없이 같은 두께
@@ -223,7 +230,7 @@ function fruitCanvas(k,mood,part){const r=TR[k],R=r*Q,ol=OLW*Q,D=Math.ceil(R*2+4
 function faceCanvas(k,mood){const R=TR[k]*Q,ri=R-OLW*Q,D=Math.ceil(R*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');g.translate(D/2,D/2);moodFace(g,Math.min(ri/15,FCAP)*FK[k],ri*(k===HK?.02:.12),k,mood);return c}
 const IMG={};
 const BASE=[],FACE={};
-for(let k=0;k<=MAXK;k++){IMG[''+k]=fruitCanvas(k,'');BASE[k]=fruitCanvas(k,'','base');for(const m of ['','b','x','m'])FACE[m+k]=faceCanvas(k,m)} // 광택은 고정, 얼굴만 굴러감
+for(let k=0;k<=SK;k++){IMG[''+k]=fruitCanvas(k,'');BASE[k]=fruitCanvas(k,'','base');for(const m of ['','b','x','m'])FACE[m+k]=faceCanvas(k,m)} // 광택은 고정, 얼굴만 굴러감
 /* ===== 도트 글자 (점수 숫자를 그래픽으로) ===== */
 const PF={'0':'01110100011001110101110011000101110','1':'00100011000010000100001000010001110','2':'01110100010000100010001000100011111','3':'11111000100010000010000011000101110','4':'00010001100101010010111110001000010','5':'11111100001111000001000011000101110','6':'00110010001000011110100011000101110','7':'11111000010001000100010000100001000','8':'01110100011000101110100011000101110','9':'01110100011000101111000010001001100',
 '+':'00000001000010011111001000010000000','X':'00000100010101000100010101000100000','!':'00100001000010000100001000000000100','H':'10001100011000111111100011000110001','U':'10001100011000110001100011000101110','L':'10000100001000010000100001000011111','S':'01111100001000001110000010000111110','M':'10001110111010110101100011000110001','B':'11110100011000111110100011000111110',
@@ -272,7 +279,7 @@ function buzz(p){try{if(navigator.vibrate){navigator.vibrate(p);return}if(hapEl)
 
 /* ===== 물리 (Matter.js) ===== */
 const {Engine,Bodies,Composite,Body,Events,Vertices}=Matter;
-let MODE='score',hearts=0,auroras=0,clearT=0;
+let MODE='score',hearts=0,auroras=0,stars=0,parties=0,clearT=0;
 let engine=null,bodies=[],state='title',score=0,best=0,cur=0,nxt=0,aimX=W/2,dropT=0,lastDrop=null,FX=[],shake=0,warnT=0,overT=0,combo=0,comboT=0,maxTier=0,lastWin=null,tGame=0,mergeQ=[];
 try{best=+localStorage.getItem('fruit-best')||0}catch(e){}
 const pick=()=>Math.floor(Math.random()*Math.min(5,Math.max(3,maxTier)));
@@ -292,22 +299,26 @@ function heartBody(px,py,r,o){const f=(r-OLW)/17.6,m=OLW,P=(x,y)=>({x:px+(x-20)*
  const b=Body.create(Object.assign({parts:[Bodies.circle(lo.x,lo.y,lr,o),Bodies.circle(ro.x,ro.y,lr,o),Bodies.fromVertices(c.x,c.y,[pts],o)]},o));
  Body.setInertia(b,Infinity); // 하트는 굴러 넘어지지 않고 늘 똑바로 (그림과 판정 일치)
  b.off={x:px-b.position.x,y:py-b.position.y};return b}
-function addPiece(k,px,py,vy){const r=TR[k],O={restitution:.05,friction:.08,frictionStatic:.15,frictionAir:.006,density:.0012,slop:.01,label:'p'},b=k===HK?heartBody(px,py,r-.6,O):Bodies.circle(px,py,r-.6,O); /* 미끄러워서 빈틈으로 잘 들어감 · 판정을 아주 살짝(0.6) 작게: 테두리가 겹치지 않을 만큼만 더 밀착 */
+function starBody(px,py,r,o){const cy=py+(r-OLW)*.06,P=starPts(r*.98,px,cy),parts=[Bodies.circle(px,cy,r*.6,o)];
+ for(let i=0;i<10;i+=2){const a=P[i],l=P[(i+9)%10],q=P[i+1];parts.push(Bodies.fromVertices((a[0]+l[0]+q[0])/3,(a[1]+l[1]+q[1])/3,[[{x:a[0],y:a[1]},{x:q[0],y:q[1]},{x:l[0],y:l[1]}]],o))}
+ const b=Body.create(Object.assign({parts},o));Body.setInertia(b,Infinity);b.off={x:px-b.position.x,y:py-b.position.y};return b}
+function addPiece(k,px,py,vy){const r=TR[k],O={restitution:.05,friction:.08,frictionStatic:.15,frictionAir:.006,density:.0012,slop:.01,label:'p'},b=k===HK?heartBody(px,py,r-.6,O):k===SK?starBody(px,py,r-.6,O):Bodies.circle(px,py,r-.6,O); /* 미끄러워서 빈틈으로 잘 들어감 · 판정을 아주 살짝(0.6) 작게: 테두리가 겹치지 않을 만큼만 더 밀착 */
  b.tier=k;b.born=tGame;b.over=0;b.pop=tGame;b.blink=Math.random()*4;if(vy)Body.setVelocity(b,{x:0,y:vy});Composite.add(engine.world,b);bodies.push(b);return b}
-function startGame(m){$('bNext').hidden=true;if(m)MODE=m;hearts=0;auroras=0;clearT=0;score=0;maxTier=0;combo=0;FX=[];overT=0;warnT=0;tGame=0;newWorld();cur=pick();nxt=pick();aimX=W/2;dropT=0;lastDrop=null;state='play';
+function startGame(m){$('bNext').hidden=true;if(m)MODE=m;try{best=+localStorage.getItem(BK())||0}catch(e){best=0}hearts=0;auroras=0;stars=0;parties=0;clearT=0;score=0;maxTier=0;combo=0;FX=[];overT=0;warnT=0;tGame=0;newWorld();cur=pick();nxt=pick();aimX=W/2;dropT=0;lastDrop=null;state='play';
  ['ovTitle','ovOver','ovPause','ovRank','ovMode'].forEach(hide);$('field').classList.remove('dead');hud();unlock();bgmStart();drawNext()}
 function drop(){if(state!=='play'||dropT>0)return;const r=TR[cur];let px=Math.max(r+1,Math.min(W-r-1,aimX));const fx=freeX(px,r);if(fx!=null)px=fx; /* 막힌 자리면 가장 가까운 빈자리로 */lastDrop=addPiece(cur,px,holdY(r),2);sfx.drop();buzz(8);cur=nxt;nxt=pick();dropT=.5;drawNext()}
 function doMerges(){if(!mergeQ.length)return;const done=new Set();
  for(const [a,b] of mergeQ){if(done.has(a)||done.has(b)||a.gone||b.gone)continue;done.add(a);done.add(b);a.gone=b.gone=1;Composite.remove(engine.world,[a,b]);bodies=bodies.filter(o=>o!==a&&o!==b);
   const k=a.tier,mx=(a.position.x+b.position.x)/2,my=(a.position.y+b.position.y)/2;
   combo=tGame-comboT<1.2?combo+1:1;comboT=tGame;const mul=Math.min(5,combo);
-  if(k===MAXK){ // 오로라 + 오로라 = 파티!
-   const pts=500*mul;score+=pts;burst(mx,my,'#ff6b7a',60,true);FX.push({txt:'PARTY! +'+pts,x:mx,y:my-20,l:1.8,L:1.8,c:'#ff6ec7',big:1});sfx.party();buzz([40,40,80]);shake=.5;continue}
+  if(k===TOPK()){ // 마지막 단계 둘 = 파티! (EASY 하트 · NORMAL 오로라 · HARD 별)
+   parties++;const pts=(LV==='h'?800:500)*mul;score+=pts;burst(mx,my,'#ff6b7a',60,true);FX.push({txt:'PARTY! +'+pts,x:mx,y:my-20,l:1.8,L:1.8,c:'#ff6ec7',big:1});sfx.party();buzz([40,40,80]);shake=.5;continue}
   const nk=k+1,nb=addPiece(nk,mx,my,-1.2);nb.pop=tGame;maxTier=Math.max(maxTier,nk);
   const pts=TS[nk]*mul;score+=pts;burst(mx,my,colorOf(nk),10+nk*3,nk>=7);
   FX.push({txt:'+'+pts+(mul>1?' X'+mul:''),x:mx,y:my-TR[nk]-6,l:1,L:1,c:mul>1?'#ffd23f':colorOf(nk),sc:nk>=5?1.25:1});
-  if(nk===MAXK){auroras++;FX.push({txt:'AURORA!',x:W/2,y:H*.35,l:1.8,L:1.8,c:'#7ef0d0',big:1});sfx.party();buzz([30,30,60]);shake=.45;if(MODE==='time')clearGame()}
-  else if(nk===HK){hearts++;FX.push({txt:'HEART!',x:W/2,y:H*.35,l:1.6,L:1.6,c:'#ff6ec7',big:1});sfx.mandu();buzz([30,30,60]);shake=.35}else{sfx.merge(nk);buzz(nk>=6?25:12)}}
+  if(nk===SK){stars++;FX.push({txt:'STAR!',x:W/2,y:H*.35,l:1.8,L:1.8,c:'#ffd23f',big:1});sfx.party();buzz([30,30,60]);shake=.5}
+  else if(nk===MAXK){auroras++;FX.push({txt:'AURORA!',x:W/2,y:H*.35,l:1.8,L:1.8,c:'#7ef0d0',big:1});sfx.party();buzz([30,30,60]);shake=.45}
+  else if(nk===HK){hearts++;FX.push({txt:'HEART!',x:W/2,y:H*.35,l:1.6,L:1.6,c:'#ff6ec7',big:1});sfx.mandu();buzz([30,30,60]);shake=.35}else{sfx.merge(nk);buzz(nk>=6?25:12)}if(MODE==='time'&&nk===TOPK())clearGame()}
  mergeQ=[];hud()}
 function colorOf(k){return FR[k][1]}
 function burst(px,py,col,n,big){for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
@@ -326,18 +337,18 @@ function waitNext(ms){setTimeout(()=>{if(state==='over')showOver()},ms+2000)}
 $('bNext').onclick=e=>{e.stopPropagation();$('bNext').hidden=true;showOver()};
 function clearGame(){if(state!=='play')return;state='over';clearT=tGame;bgmStop();waitNext(1200)}
 const fmtT=t=>{const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(2)};
-const BON_H=300,BON_A=2000; // 스코어 모드 보너스: 하트 1개 300점, 오로라 1개 2000점
+const BON_H=300,BON_A=2000,BON_S=5000; // 스코어 모드 보너스: 하트 1개 300점, 오로라 1개 2000점
 function gameOver(){if(state!=='play')return;state='over';bgmStop();sfx.over();buzz([60,40,100]);$('field').classList.add('dead');waitNext(900)}
 function showOver(){let rec;const tOk=MODE==='time'&&clearT>0;
- if(tOk){const cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem('fruit-bestT')||0}catch(e){}const nb=!bt||cs<bt;if(nb)try{localStorage.setItem('fruit-bestT',cs)}catch(e){}
-  $('overTitle').innerHTML='AURORA<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);
-  rec={score:cs,stage:maxTier+1,mode:'time',saved:false}}
+ if(tOk){const cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem(BK('T'))||0}catch(e){}const nb=!bt||cs<bt;if(nb)try{localStorage.setItem(BK('T'),cs)}catch(e){}
+  $('overTitle').innerHTML=['HEART','AURORA','STAR'][TOPK()-HK]+'<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);
+  rec={score:cs,stage:maxTier+1,mode:LVM('time'),lv:LV,saved:false}}
  else{ /* 스코어 모드, 또는 타임어택 실패 → 점수로 기록 (SCORE 랭킹) */
-  const bonus=hearts*BON_H+auroras*BON_A,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem('fruit-best',best)}catch(e){}}
+  const bonus=hearts*BON_H+auroras*BON_A+stars*BON_S,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem(BK(),best)}catch(e){}}
   $('overTitle').innerHTML=MODE==='time'?'TIME<br>OVER':'GAME<br>OVER';$('overTitle').classList.remove('ok');$('overScore').textContent=total.toLocaleString();$('stL').textContent=nb?'NEW BEST':'SCORE';$('stL').classList.toggle('nb',nb);
   $('overInfo').innerHTML=(bonus?`${score.toLocaleString()} + ♥${hearts} ${(hearts*BON_H).toLocaleString()}`+(auroras?` + AURORA ${auroras} ${(auroras*BON_A).toLocaleString()}`:''):'')+(nb?(bonus?'<br>':'')+'NEW BEST!':'');
-  rec={score:total,stage:maxTier+1,mode:'score',saved:total<=0}}
- $('stH').textContent=hearts;$('stA').textContent=auroras; /* 결과는 박스에 */
+  rec={score:total,stage:maxTier+1,mode:LVM('score'),lv:LV,saved:total<=0}}
+ $('stH').textContent=hearts;$('stAL').textContent=LV==='e'?'PARTY':LV==='h'?'STAR':'AURORA';$('stA').textContent=LV==='e'?parties:LV==='h'?stars:auroras; /* 결과는 박스에 */
  lastWin=rec;$('bSave').textContent='OK';$('bSave').disabled=rec.saved;$('nameIn').value=localStorage.getItem('fruit-name')||'';show('ovOver')}
 
 /* ===== 그리기 ===== */
@@ -406,8 +417,10 @@ function toMenu(){$('bNext').hidden=true;['ovPause','ovOver','ovRank'].forEach(h
 $('bMenu').onclick=toMenu;$('bMenu2').onclick=toMenu;
 $('bSound').onclick=()=>{sound=!sound;$('bSound').classList.toggle('on',sound);if(ac&&master)master.gain.value=sound?1:0;if(sound&&state==='play')bgmStart()};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')togglePause()});
-const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>빨강 → … → 하트 → 마지막은 오로라 볼!<br>TIME ATTACK: 오로라 볼을 최대한 빨리<br>SCORE: 점수 + 하트·오로라 보너스<br>맨 위까지 가득 차면 게임 끝!","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
-$('bStart').onclick=()=>{unlock();show('ovMode')}; // 모드 고르기
+const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>빨강 → … → 하트 → 마지막은 오로라 볼!<br>EASY 하트 · NORMAL 오로라 · HARD 별까지!<br>TIME ATTACK: 마지막 구슬을 최대한 빨리<br>SCORE: 점수 + 하트·오로라·별 보너스<br>맨 위까지 가득 차면 게임 끝!","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
+function lvSync(){document.querySelectorAll('#lvSel button').forEach(b=>b.classList.toggle('on',b.dataset.l===LV))}lvSync();
+document.querySelectorAll('#lvSel button').forEach(b=>b.onclick=()=>{LV=b.dataset.l;try{localStorage.setItem('fruit-lv',LV)}catch(e){}lvSync()});
+$('bStart').onclick=()=>{unlock();lvSync();show('ovMode')}; // 모드 고르기
 const goMode=m=>{unlock();hide('ovMode');phTut('fruit-tut',TUT,()=>startGame(m))};
 $('bModeT').onclick=()=>goMode('time');$('bModeS').onclick=()=>goMode('score');
 $('bRetry').onclick=()=>{hide('ovOver');startGame(MODE)};
@@ -423,10 +436,11 @@ $('bSave').onclick=async()=>{if(!lastWin||lastWin.saved)return;const n=($('nameI
 let RT='score',RROWS=null;
 function rtSync(){$('rtT').classList.toggle('on',RT==='time');$('rtS').classList.toggle('on',RT==='score')}
 $('rtT').onclick=()=>{RT='time';rtSync();if(RROWS)render(RROWS)};$('rtS').onclick=()=>{RT='score';rtSync();if(RROWS)render(RROWS)};
-async function openRank(){RT=lastWin&&lastWin.mode==='time'?'time':state==='title'?RT:MODE;rtSync();show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
-function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}const T=RT==='time';rows=rows.filter(r=>T?r.m==='time':(r.m==='score'||r.m==='normal')).filter(r=>+r.s>0).sort((a,b)=>T?a.s-b.s:b.s-a.s).slice(0,100);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
- $('rankList').innerHTML=rows.length?rows.map((r,i)=>{let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}const tier=Math.max(1,Math.min(10,+r.v||1));
-  return `<div class="${cls}"><span class="r">${i+1}</span><span>${esc(r.n)}</span><span class="s">${T?fmtT(r.s/100):(+r.s).toLocaleString()}</span><span class="m"><img src="${ICO(tier-1)}" style="width:18px;height:18px;vertical-align:middle" alt=""></span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
+async function openRank(){RT=lastWin&&lastWin.mode.indexOf('time')===0?'time':state==='title'?RT:MODE;rtSync();show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
+const LVOF=m=>(/-(e|h)$/.exec(m||'')||[,'n'])[1]; /* 기존 기록 = NORMAL */
+function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}const T=RT==='time';rows=rows.filter(r=>T?/^time/.test(r.m):/^(score|normal)/.test(r.m)).filter(r=>+r.s>0).sort((a,b)=>T?a.s-b.s:b.s-a.s).slice(0,100);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
+ $('rankList').innerHTML=rows.length?rows.map((r,i)=>{let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}const tier=Math.max(1,Math.min(11,+r.v||1));
+  return `<div class="${cls}"><span class="r">${i+1}</span><span>${esc(r.n)} <i class="lvb ${LVOF(r.m)}">${({e:'EASY',n:'NORMAL',h:'HARD'})[LVOF(r.m)]}</i></span><span class="s">${T?fmtT(r.s/100):(+r.s).toLocaleString()}</span><span class="m"><img src="${ICO(tier-1)}" style="width:18px;height:18px;vertical-align:middle" alt=""></span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
 $('bRank').onclick=()=>{if(state==='play')togglePause();openRank()};$('bRank2').onclick=openRank;$('bRank3').onclick=openRank;
 
 if(location.hash==='#test')window.__t={get state(){return state},get bodies(){return bodies},get score(){return score},get maxTier(){return maxTier},IMG,TR,startGame,drop,gameOver,setX:v=>aimX=v,addPiece:(k,px,py)=>addPiece(k,px,py,0)};
