@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793001824";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793003820";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -148,14 +148,13 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
     <div class="ov" id="ovRank">
       <div class="sub">RANKING</div>
       <div class="rtab"><button id="rtT">TIME ATTACK</button><button id="rtS" class="on">SCORE</button></div>
-      <div id="rkBar"></div>
       <div class="list" id="rankList"></div>
       <button class="x" data-close="ovRank">✕</button>
     </div>
   </div></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
-<script src="../games/ph.js?v=14"></script>
+<script src="../games/ph.js?v=12"></script>
 <script>
 (()=>{
 const RANK_URL='https://script.google.com/macros/s/AKfycbzkdjVleobj98oyxlC77cUf5txCRiSB6D1zgRWU56pX22ElXAx9R8xFRGnV0nKAUbwC/exec';
@@ -432,16 +431,14 @@ const ICO=(()=>{const c={};return k=>c[k]||(c[k]=IMG[''+k].toDataURL())})();
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function local(){try{return JSON.parse(localStorage.getItem('fruit-ranks')||'[]')}catch(e){return[]}}
 $('bSave').onclick=async()=>{if(!lastWin||lastWin.saved)return;const n=($('nameIn').value.trim()||'익명').slice(0,8);localStorage.setItem('fruit-name',n);lastWin.saved=true;lastWin.n=n;$('bSave').textContent='…';$('bSave').disabled=true;
- const rec={n,s:lastWin.score,v:lastWin.stage,m:lastWin.mode,ts:Date.now()};const l=local();l.push(rec);localStorage.setItem('fruit-ranks',JSON.stringify(l.slice(-300)));
+ const rec={n,s:lastWin.score,v:lastWin.stage,m:lastWin.mode};const l=local();l.push(rec);localStorage.setItem('fruit-ranks',JSON.stringify(l.slice(-300)));
  try{await fetch(`${RANK_URL}?g=fruit&a=add&n=${encodeURIComponent(n)}&s=${rec.s}&v=${rec.v}&m=${rec.m}`)}catch(e){}$('bSave').textContent='✓';openRank()};
 let RT='score',RROWS=null;
 function rtSync(){$('rtT').classList.toggle('on',RT==='time');$('rtS').classList.toggle('on',RT==='score')}
 $('rtT').onclick=()=>{RT='time';rtSync();if(RROWS)render(RROWS)};$('rtS').onclick=()=>{RT='score';rtSync();if(RROWS)render(RROWS)};
-let RSEL={};function rkBarInit(sel){if(window.phRk)RSEL=phRk.bar($('rkBar'),{game:'fruitpang',diffs:[['e','EASY'],['n','NORMAL'],['h','HARD']],sel,onChange:s=>{RSEL=s;if(RROWS)render(RROWS)}})}
-/* 랭킹: 모드(SCORE·TIME) × 난이도 × 버전 (게임:모드:난이도:버전) */
-async function openRank(){RT=lastWin&&lastWin.mode.indexOf('time')===0?'time':state==='title'?RT:MODE;rtSync();rkBarInit(state==='title'?null:{diff:lastWin&&lastWin.lv||LV,ver:window.phRk?phRk.vers('fruitpang')[0].id:null});show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
+async function openRank(){RT=lastWin&&lastWin.mode.indexOf('time')===0?'time':state==='title'?RT:MODE;rtSync();show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
 const LVOF=m=>(/-(e|h)$/.exec(m||'')||[,'n'])[1]; /* 기존 기록 = NORMAL */
-function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}const T=RT==='time';rows=rows.filter(r=>T?/^time/.test(r.m):/^(score|normal)/.test(r.m)).filter(r=>+r.s>0).filter(r=>!window.phRk||(LVOF(r.m)===RSEL.diff&&phRk.ver('fruitpang',r)===RSEL.ver)).sort((a,b)=>T?a.s-b.s:b.s-a.s).slice(0,100);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
+function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}const T=RT==='time';rows=rows.filter(r=>T?/^time/.test(r.m):/^(score|normal)/.test(r.m)).filter(r=>+r.s>0).sort((a,b)=>T?a.s-b.s:b.s-a.s).slice(0,100);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
  $('rankList').innerHTML=rows.length?rows.map((r,i)=>{let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}const tier=Math.max(1,Math.min(11,+r.v||1));
   return `<div class="${cls}"><span class="r">${i+1}</span><span>${esc(r.n)} <i class="lvb ${LVOF(r.m)}">${({e:'EASY',n:'NORMAL',h:'HARD'})[LVOF(r.m)]}</i></span><span class="s">${T?fmtT(r.s/100):(+r.s).toLocaleString()}</span><span class="m"><img src="${ICO(tier-1)}" style="width:18px;height:18px;vertical-align:middle" alt=""></span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
 $('bRank').onclick=()=>{if(state==='play')togglePause();openRank()};$('bRank2').onclick=openRank;$('bRank3').onclick=openRank;
