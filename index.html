@@ -148,6 +148,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
     <div class="ov" id="ovRank">
       <div class="sub">RANKING</div>
       <div class="rtab"><button id="rtT">TIME ATTACK</button><button id="rtS" class="on">SCORE</button></div>
+      <div class="rtab lvs" id="rtL" hidden><button data-rl="e">EASY</button><button data-rl="n">NORMAL</button><button data-rl="h">HARD</button></div>
       <div class="list" id="rankList"></div>
       <button class="x" data-close="ovRank">✕</button>
     </div>
@@ -434,12 +435,13 @@ function local(){try{return JSON.parse(localStorage.getItem('fruit-ranks')||'[]'
 $('bSave').onclick=async()=>{if(!lastWin||lastWin.saved)return;const n=($('nameIn').value.trim()||'익명').slice(0,8);localStorage.setItem('fruit-name',n);lastWin.saved=true;lastWin.n=n;$('bSave').textContent='…';$('bSave').disabled=true;
  const rec={n,s:lastWin.score,v:lastWin.stage,m:lastWin.mode};const l=local();l.push(rec);localStorage.setItem('fruit-ranks',JSON.stringify(l.slice(-300)));
  try{await fetch(`${RANK_URL}?g=fruit&a=add&n=${encodeURIComponent(n)}&s=${rec.s}&v=${rec.v}&m=${rec.m}`)}catch(e){}$('bSave').textContent='✓';openRank()};
-let RT='score',RROWS=null;
-function rtSync(){$('rtT').classList.toggle('on',RT==='time');$('rtS').classList.toggle('on',RT==='score')}
+let RT='score',RL='n',RROWS=null;
+function rtSync(){$('rtT').classList.toggle('on',RT==='time');$('rtS').classList.toggle('on',RT==='score');$('rtL').hidden=RT!=='time';$('rtL').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.rl===RL))}
+$('rtL').onclick=e=>{const b=e.target.closest('button[data-rl]');if(!b)return;RL=b.dataset.rl;rtSync();if(RROWS)render(RROWS)};
 $('rtT').onclick=()=>{RT='time';rtSync();if(RROWS)render(RROWS)};$('rtS').onclick=()=>{RT='score';rtSync();if(RROWS)render(RROWS)};
-async function openRank(){RT=lastWin&&lastWin.mode.indexOf('time')===0?'time':state==='title'?RT:MODE;rtSync();show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
+async function openRank(){RT=lastWin&&lastWin.mode.indexOf('time')===0?'time':state==='title'?RT:MODE;RL=lastWin&&lastWin.lv?lastWin.lv:LV;rtSync();show('ovRank');render(null,true);try{const j=await fetch(`${RANK_URL}?g=fruit`).then(r=>r.json());RROWS=j.top||[]}catch(e){RROWS=local()}render(RROWS)}
 const LVOF=m=>(/-(e|h)$/.exec(m||'')||[,'n'])[1]; /* 기존 기록 = NORMAL */
-function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}const T=RT==='time';rows=rows.filter(r=>T?/^time/.test(r.m):/^(score|normal)/.test(r.m)).filter(r=>+r.s>0).sort((a,b)=>T?a.s-b.s:b.s-a.s).slice(0,100);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
+function render(rows,loading){if(loading){$('rankList').innerHTML='<span class="em">LOADING…</span>';return}const T=RT==='time';rows=rows.filter(r=>T?/^time/.test(r.m)&&LVOF(r.m)===RL:/^(score|normal)/.test(r.m)).filter(r=>+r.s>0).sort((a,b)=>T?a.s-b.s:b.s-a.s).slice(0,100);const mw=lastWin&&lastWin.saved?lastWin:null;let marked=false;
  $('rankList').innerHTML=rows.length?rows.map((r,i)=>{let cls='';if(mw&&!marked&&r.n===mw.n&&+r.s===mw.score){cls='me';marked=true}const tier=Math.max(1,Math.min(11,+r.v||1));
   return `<div class="${cls}"><span class="r">${i+1}</span><span>${esc(r.n)} <i class="lvb ${LVOF(r.m)}">${({e:'EASY',n:'NORMAL',h:'HARD'})[LVOF(r.m)]}</i></span><span class="s">${T?fmtT(r.s/100):(+r.s).toLocaleString()}</span><span class="m"><img src="${ICO(tier-1)}" style="width:18px;height:18px;vertical-align:middle" alt=""></span></div>`}).join(''):'<span class="em">아직 기록이 없어요</span>'}
 $('bRank').onclick=()=>{if(state==='play')togglePause();openRank()};$('bRank2').onclick=openRank;$('bRank3').onclick=openRank;
