@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793003820";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('8px "Press Start 2P"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793110275";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -125,7 +125,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 
     <div class="ov show" id="ovTitle"><div class="phS"><i class="phS-sp a"></i><div class="phS-logo" data-word="MARBLE|PANG"></div><div class="phS-show" id="show"></div><i class="phS-sp b"></i><div class="phS-btns"><button class="phS-b" id="bStart">START</button><button class="phS-b gold" id="bRank2">RANKING</button></div><i class="phS-sp c"></i><div class="phS-credit">이 게임은 서울 마포구에 사는 박현아가 만든<br>비상업용 게임이에요. 구슬 팡팡이들을 합쳐서<br>커다란 오로라 볼을 만들어 주세요.</div></div></div>
     <div class="ov" id="ovMode">
-      <div class="rtab lvs" id="lvSel"><button data-l="e">EASY</button><button data-l="n">NORMAL</button><button data-l="h">HARD</button></div>
+      <div class="rtab lvs" id="lvSel"><button data-l="e">EASY ×0.5</button><button data-l="n">NORMAL ×1</button><button data-l="h">HARD ×2</button></div>
       <button class="phS-b" id="bModeT">TIME ATTACK</button>
       <button class="phS-b yl" id="bModeS">SCORE</button>
       <button class="x" data-close="ovMode">✕</button>
@@ -170,7 +170,7 @@ const TS=[1,3,6,10,15,21,28,36,45,66,90]; // 합쳐질 때 점수
 const MAXK=9,SK=10,HK=8,Q=4,OLW=2.6,FCAP=(38-OLW)*Q/15; // FCAP: 눈코입은 초록(5단계) 크기에서 멈추고 몸만 커짐
 const FK=[1,1,.8,.8,.8,.8,1,1,1,1,1];
 let LV='n';try{LV=localStorage.getItem('fruit-lv')||'n'}catch(e){} /* 난이도: e=하트까지 · n=오로라까지 · h=별까지 */
-const TOPK=()=>LV==='e'?HK:LV==='h'?SK:MAXK,LVM=(m,l)=>(l||LV)==='n'?m:m+'-'+(l||LV),BK=s=>'fruit-best'+(s||'')+(LV==='n'?'':'-'+LV); // 노랑·연두·초록·하늘은 눈코입 조금 작게 // OLW: 테두리 두께 (모든 크기에서 같음)
+const TOPK=()=>LV==='e'?HK:LV==='h'?SK:MAXK,LVM=(m,l)=>(l||LV)==='n'?m:m+'-'+(l||LV),BK=s=>'fruit-best'+(s||'')+(LV==='n'?'':'-'+LV),LVMUL={e:.5,n:1,h:2}; /* 난이도 점수 배율: EASY ×0.5 · NORMAL ×1 · HARD ×2 */ // 노랑·연두·초록·하늘은 눈코입 조금 작게 // OLW: 테두리 두께 (모든 크기에서 같음)
 const FR=GC.map((c,k)=>[NAME[k],c[0]]);
 function face(g,s,fy,k){ // 단계마다 다른 표정 — 눈·입 모양만 다르고 색은 하나로
  const o='#2a1712',ex=4.2*s,ey=-2*s+fy;g.fillStyle=g.strokeStyle=o;g.lineCap=g.lineJoin='round';g.lineWidth=1.5*s;
@@ -344,9 +344,9 @@ function showOver(){let rec;const tOk=MODE==='time'&&clearT>0;
   $('overTitle').innerHTML=['HEART','AURORA','STAR'][TOPK()-HK]+'<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);
   rec={score:cs,stage:maxTier+1,mode:LVM('time'),lv:LV,saved:false}}
  else{ /* 스코어 모드, 또는 타임어택 실패 → 점수로 기록 (SCORE 랭킹) */
-  const bonus=hearts*BON_H+auroras*BON_A+stars*BON_S,total=score+bonus,nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem(BK(),best)}catch(e){}}
+  const bonus=hearts*BON_H+auroras*BON_A+stars*BON_S,mulL=LVMUL[LV]||1,total=Math.round((score+bonus)*mulL),nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem(BK(),best)}catch(e){}}
   $('overTitle').innerHTML=MODE==='time'?'TIME<br>OVER':'GAME<br>OVER';$('overTitle').classList.remove('ok');$('overScore').textContent=total.toLocaleString();$('stL').textContent=nb?'NEW BEST':'SCORE';$('stL').classList.toggle('nb',nb);
-  $('overInfo').innerHTML=(bonus?`${score.toLocaleString()} + ♥${hearts} ${(hearts*BON_H).toLocaleString()}`+(auroras?` + AURORA ${auroras} ${(auroras*BON_A).toLocaleString()}`:''):'')+(nb?(bonus?'<br>':'')+'NEW BEST!':'');
+  $('overInfo').innerHTML=(bonus?`${score.toLocaleString()} + ♥${hearts} ${(hearts*BON_H).toLocaleString()}`+(auroras?` + AURORA ${auroras} ${(auroras*BON_A).toLocaleString()}`:'')+(stars?` + STAR ${stars} ${(stars*BON_S).toLocaleString()}`:''):'')+(mulL!==1?` × ${mulL}`:'')+(nb?(bonus?'<br>':'')+'NEW BEST!':'');
   rec={score:total,stage:maxTier+1,mode:LVM('score'),lv:LV,saved:total<=0}}
  $('stH').textContent=hearts;$('stAL').textContent=LV==='e'?'PARTY':LV==='h'?'STAR':'AURORA';$('stA').textContent=LV==='e'?parties:LV==='h'?stars:auroras; /* 결과는 박스에 */
  lastWin=rec;$('bSave').textContent='OK';$('bSave').disabled=rec.saved;$('nameIn').value=localStorage.getItem('fruit-name')||'';show('ovOver')}
