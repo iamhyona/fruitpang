@@ -183,7 +183,7 @@ const TS=[1,3,6,10,15,21,28,36,45,66,90]; // 합쳐질 때 점수
 const MAXK=9,SK=10,HK=8,Q=4,OLW=2.6,FCAP=(38-OLW)*Q/15; // FCAP: 눈코입은 초록(5단계) 크기에서 멈추고 몸만 커짐
 const FK=[1,1,.8,.8,.8,.8,1,1,1,1,1];
 const PP=window.phPref||{get:(k,d)=>d,set(){}},PA=window.phAudio||{bgm:()=>.7,sfx:()=>.8,on(){}};
-let LV='n';try{LV=localStorage.getItem('fruit-lv')||'n'}catch(e){}LV=PP.get('lv',LV);if(!/^[enh]$/.test(LV))LV='n';
+let LV='n';try{LV=localStorage.getItem('fruit-lv')||'n'}catch(e){}LV='n'; /* 들어올 때마다 기본 NORMAL */
 let GUIDE=PP.get('guide',true),FXON=PP.get('fx',true),HAP=PP.get('hap',true); /* 설정: 조준선 · 화면 효과 · 진동 */ /* 난이도: e=하트까지 · n=오로라까지 · h=별까지 */
 const TOPK=()=>LV==='e'?HK:LV==='h'?SK:MAXK,LVM=(m,l)=>(l||LV)==='n'?m:m+'-'+(l||LV),BK=s=>'fruit-best'+(s||'')+(LV==='n'?'':'-'+LV),LVMUL={e:.5,n:1,h:2}; /* 난이도 점수 배율: EASY ×0.5 · NORMAL ×1 · HARD ×2 */ // 노랑·연두·초록·하늘은 눈코입 조금 작게 // OLW: 테두리 두께 (모든 크기에서 같음)
 const FR=GC.map((c,k)=>[NAME[k],c[0]]);
@@ -454,7 +454,7 @@ const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>
 /* 모드 고르기: 위 슬라이드 토글(TIME ATTACK · SCORE, 기본 SCORE) → 아래 난이도 버튼을 누르면 시작 */
 let PICKM='score';function mSync(){$('bModeT').classList.toggle('on',PICKM==='time');$('bModeS').classList.toggle('on',PICKM==='score')}
 function lvSync(){document.querySelectorAll('#ovMode .phDiff').forEach(b=>b.classList.toggle('sel',b.dataset.l===LV))}
-$('bStart').onclick=()=>{unlock();PICKM=PP.get('mode','score')==='time'?'time':'score';mSync();lvSync();show('ovMode');window.phSeg&&phSeg()};
+$('bStart').onclick=()=>{unlock();PICKM='score';mSync();lvSync();show('ovMode');window.phSeg&&phSeg()};
 const goMode=m=>{unlock();hide('ovMode');phTut('fruit-tut',TUT,()=>startGame(m))};
 $('bModeT').onclick=()=>{PICKM='time';PP.set('mode',PICKM);mSync()};$('bModeS').onclick=()=>{PICKM='score';PP.set('mode',PICKM);mSync()};
 document.querySelectorAll('#ovMode .phDiff').forEach(b=>b.onclick=()=>{LV=b.dataset.l;try{localStorage.setItem('fruit-lv',LV)}catch(e){}PP.set('lv',LV);PP.set('mode',PICKM);lvSync();goMode(PICKM)});
