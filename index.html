@@ -392,7 +392,7 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
  const danger=state==='play'&&warnT>0;if(danger&&Math.floor(tGame*6)%2){x.strokeStyle='#ff5a6e';x.lineWidth=3;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,LIMY());x.lineTo(W,LIMY());x.stroke();x.setLineDash([])} /* 점선 없앰: 가득 찰 때만 맨 위가 깜빡 */
  // 떨어뜨릴 위치 안내 + 지금 팡팡이
  if(state==='play'){const r=TR[cur],px=Math.max(r+1,Math.min(W-r-1,aimX));
-  if(GUIDE){const y0=holdY(r)+r+3;let y1=H;for(const b of bodies){const br=TR[b.tier],dx=Math.abs(b.position.x-px);if(dx<br){const sy2=b.position.y-Math.sqrt(br*br-dx*dx);if(sy2<y1)y1=sy2}} /* 조준선: 떨어질 곳까지 연한 점선 */
+  if(GUIDE&&LV==='e'){const y0=holdY(r)+r+3;let y1=H;for(const b of bodies){const br=TR[b.tier],dx=Math.abs(b.position.x-px);if(dx<br){const sy2=b.position.y-Math.sqrt(br*br-dx*dx);if(sy2<y1)y1=sy2}} /* 조준선: 떨어질 곳까지 연한 점선 */
    if(y1>y0+4){x.save();x.strokeStyle='rgba(223,226,234,.22)';x.lineWidth=1.5;x.setLineDash([4,5]);x.beginPath();x.moveTo(px,y0);x.lineTo(px,y1);x.stroke();x.restore()}}
   drawPiece(cur,px,holdY(r),0,'',1,dropT>0?.45:1)}
  // 팡팡이들
@@ -445,7 +445,7 @@ $('bRestart').onclick=()=>{hide('ovPause');startGame(MODE)};
 function toMenu(){$('bNext').hidden=true;['ovPause','ovOver','ovRank'].forEach(hide);$('field').classList.remove('dead');state='title';bgmStop();if(engine){Composite.clear(engine.world,false);bodies=[]}FX=[];show('ovTitle');hud()}
 $('bMenu').onclick=toMenu;$('bMenu2').onclick=toMenu;
 /* 설정 창: 톱니 → 게임 멈추고 열기, 닫으면 이어서 */
-if(window.phSettings)phSettings.config({guide:{label:'조준선',get:()=>GUIDE,set:v=>{GUIDE=!!v;PP.set('guide',GUIDE)}},fx:{get:()=>FXON,set:v=>{FXON=!!v;PP.set('fx',FXON);if(!FXON){shake=0;FX=FX.filter(f=>f.txt)}}},hap:{get:()=>HAP,set:v=>{HAP=!!v;PP.set('hap',HAP)}}});
+if(window.phSettings)phSettings.config({guide:{label:'조준선 · EASY',get:()=>GUIDE,set:v=>{GUIDE=!!v;PP.set('guide',GUIDE)}},fx:{get:()=>FXON,set:v=>{FXON=!!v;PP.set('fx',FXON);if(!FXON){shake=0;FX=FX.filter(f=>f.txt)}}},hap:{get:()=>HAP,set:v=>{HAP=!!v;PP.set('hap',HAP)}}});
 let setPaused=false;
 $('bSet').onclick=()=>{if(!window.phSettings)return;if(state==='play'){state='pause';setPaused=true;bgmStop()}
  phSettings.open({inGame:state!=='title',restart:()=>{setPaused=false;hide('ovPause');startGame(MODE)},home:()=>{setPaused=false;toMenu()},onClose:()=>{if(setPaused&&state==='pause'){state='play';bgmStart();lastT=0}setPaused=false}})};
