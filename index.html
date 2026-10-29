@@ -95,7 +95,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 </style>
 <script>/* 카톡 등 인앱 브라우저: 실제 보이는 높이로 화면 맞춤 */(function(){var d=document.documentElement;function f(){d.style.setProperty('--app-h',window.innerHeight+'px')}f();addEventListener('resize',f);addEventListener('orientationchange',function(){setTimeout(f,300)});addEventListener('pageshow',f);setTimeout(f,250);setTimeout(f,1000)})();</script>
 <style>html,body{height:var(--app-h,100dvh)!important}</style>
-<link rel="stylesheet" href="../games/ph.css?v=12"><style>#ovTitle{padding:0!important}
+<link rel="stylesheet" href="../games/ph.css?v=13"><style>#ovTitle{padding:0!important}
 .nextc{width:34px;height:34px;display:block}
 .go{font:700 38px "Silkscreen",monospace;color:#ff5a6e;text-shadow:0 0 12px rgba(255,90,110,.6);line-height:1.1;text-align:center;letter-spacing:.05em;margin-bottom:4px}.go.ok{color:#7ef0d0;text-shadow:0 0 12px rgba(126,240,208,.6)}
 .st{display:grid;grid-template-columns:1.5fr 1fr 1fr;width:min(290px,100%);border:3px solid var(--gb);border-radius:10px;background:#10132b}
@@ -167,7 +167,7 @@ html body #ovMode .phDiff.phDiff.phDiff.sel{background:color-mix(in srgb,var(--b
   </div></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
-<script src="../games/ph.js?v=22"></script>
+<script src="../games/ph.js?v=23"></script>
 <script>
 (()=>{
 const RANK_URL='https://script.google.com/macros/s/AKfycbzkdjVleobj98oyxlC77cUf5txCRiSB6D1zgRWU56pX22ElXAx9R8xFRGnV0nKAUbwC/exec';
@@ -331,20 +331,15 @@ function doMerges(){if(!mergeQ.length)return;const done=new Set();
   const k=a.tier,mx=(a.position.x+b.position.x)/2,my=(a.position.y+b.position.y)/2;
   combo=tGame-comboT<1.2?combo+1:1;comboT=tGame;const mul=Math.min(5,combo);
   if(k===TOPK()){ // 마지막 단계 둘 = 파티! (EASY 하트 · NORMAL 오로라 · HARD 별)
-   parties++;const pts=(LV==='h'?800:500)*mul;score+=pts;burst(mx,my,'#ff6b7a',60,true);pop('PARTY!',mx,my-20,28,'gold',1.8);pop('+'+pts,mx,my+6,22,'gold',1.8,1);sfx.party();buzz([40,40,80]);shake=.5;continue}
+   parties++;const pts=(LV==='h'?800:500)*mul;score+=pts;burst(mx,my,'#ff6b7a',60,true);FX.push({txt:'PARTY! +'+pts,x:mx,y:my-20,l:1.8,L:1.8,c:'#ff6ec7',big:1});sfx.party();buzz([40,40,80]);shake=.5;continue}
   const nk=k+1,nb=addPiece(nk,mx,my,-1.2);nb.pop=tGame;maxTier=Math.max(maxTier,nk);
   const pts=TS[nk]*mul;score+=pts;burst(mx,my,colorOf(nk),10+nk*3,nk>=7);
-  pop('+'+pts,mx,my-TR[nk]-6,nk>=5?22:18,'gold',1,1);
-  if(mul>1){FX=FX.filter(f=>!f.combo);pop('COMBO X'+mul,mx,my-TR[nk]-26,20,'gold',1.1).combo=1}
-  if(nk===SK){stars++;pop('STAR!',W/2,H*.35,28,'gold',1.8);sfx.party();buzz([30,30,60]);shake=.5}
-  else if(nk===MAXK){auroras++;pop('AURORA!',W/2,H*.35,28,'gold',1.8);sfx.party();buzz([30,30,60]);shake=.45}
-  else if(nk===HK){hearts++;pop('HEART!',W/2,H*.35,20,'gold',1.6);sfx.mandu();buzz([30,30,60]);shake=.35}else{sfx.merge(nk);buzz(nk>=6?25:12)}if(MODE==='time'&&nk===TOPK())clearGame()}
+  FX.push({txt:'+'+pts+(mul>1?' X'+mul:''),x:mx,y:my-TR[nk]-6,l:1,L:1,c:mul>1?'#ffd23f':colorOf(nk),sc:nk>=5?1.25:1});
+  if(nk===SK){stars++;FX.push({txt:'STAR!',x:W/2,y:H*.35,l:1.8,L:1.8,c:'#ffd23f',big:1});sfx.party();buzz([30,30,60]);shake=.5}
+  else if(nk===MAXK){auroras++;FX.push({txt:'AURORA!',x:W/2,y:H*.35,l:1.8,L:1.8,c:'#7ef0d0',big:1});sfx.party();buzz([30,30,60]);shake=.45}
+  else if(nk===HK){hearts++;FX.push({txt:'HEART!',x:W/2,y:H*.35,l:1.6,L:1.6,c:'#ff6ec7',big:1});sfx.mandu();buzz([30,30,60]);shake=.35}else{sfx.merge(nk);buzz(nk>=6?25:12)}if(MODE==='time'&&nk===TOPK())clearGame()}
  mergeQ=[];hud()}
 function colorOf(k){return FR[k][1]}
-/* 팝업 문구 (공통 모양): 글자 = phPopDraw(Silkscreen) · 숫자 = Jersey 15 · 크기는 CSS px */
-function pop(txt,px,py,size,kind,life,num){const f={txt,x:px,y:py,l:life||1,L:life||1,c:kind||'gold',px:size||20,num:!!num};FX.push(f);return f}
-function numDraw(c,t,X,Y,px,col,al){col=window.phPopColor?phPopColor(col):col;c.save();c.globalAlpha=al;c.font=`400 ${px}px "Jersey 15",sans-serif`;c.textAlign='center';c.textBaseline='middle';c.lineJoin='round';c.lineWidth=Math.max(3,px*.2);c.strokeStyle='#08090f';c.shadowColor=col;c.shadowBlur=px*.5;c.strokeText(t,X,Y);c.shadowBlur=0;c.fillStyle=col;c.fillText(t,X,Y);c.restore()}
-function popDraw(c,t,X,Y,px,col,al){if(window.phPopDraw)phPopDraw(c,t,X,Y,px,col,al);else numDraw(c,t,X,Y,px,col,al)}
 function burst(px,py,col,n,big){if(!FXON)return;for(let i=0;i<n;i++){const a=Math.random()*6.28,s=40+Math.random()*(big?260:160);FX.push({x:px,y:py,vx:Math.cos(a)*s,vy:Math.sin(a)*s-40,l:.5+Math.random()*.5,c:Math.random()<.35?'#fff':col,s:big?4:3})}}
 /* 대기 구슬 줄(보이지 않는 선)에서 반지름 r 구슬이 들어갈 자리가 있는지: 조준 위치에서 가까운 빈자리 x, 없으면 null */
 function hitAt(x,y,r){for(const b of bodies){const ps=b.parts.length>1?b.parts.slice(1):[b];for(const q of ps){const rr=q.circleRadius||Math.max(...q.vertices.map(v=>Math.hypot(v.x-q.position.x,v.y-q.position.y)))*.9;if(Math.hypot(x-q.position.x,y-q.position.y)<r+rr-1.5)return true}}return false}
@@ -360,10 +355,10 @@ function checkOver(dt){const full=freeX(aimX,TR[cur])===null; /* 지금 구슬�
 let ovTok=0,ovDone=-1; /* 결과 화면은 한 판에 한 번만 (두 번 뜨면 같은 기록을 두 번 등록할 수 있었음) */
 function waitNext(ms){const t=ovTok;setTimeout(()=>{if(state==='over'&&t===ovTok)showOver()},ms+2000)}
 $('bNext').onclick=e=>{e.stopPropagation();$('bNext').hidden=true;showOver()};
-function clearGame(){if(state!=='play')return;state='over';clearT=tGame;bgmStop();pop('CLEAR!',W/2,H*.5,28,'stage',2.6);waitNext(1200)}
+function clearGame(){if(state!=='play')return;state='over';clearT=tGame;bgmStop();waitNext(1200)}
 const fmtT=t=>{const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(2)};
 const BON_H=300,BON_A=2000,BON_S=5000; // 스코어 모드 보너스: 하트 1개 300점, 오로라 1개 2000점
-function gameOver(){if(state!=='play')return;state='over';bgmStop();pop('GAME OVER',W/2,H*.45,28,'warn',2.6);sfx.over();buzz([60,40,100]);$('field').classList.add('dead');waitNext(900)}
+function gameOver(){if(state!=='play')return;state='over';bgmStop();sfx.over();buzz([60,40,100]);$('field').classList.add('dead');waitNext(900)}
 function showOver(){if(ovDone===ovTok)return;ovDone=ovTok;let rec;const tOk=MODE==='time'&&clearT>0;
  if(tOk){const cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem(BK('T'))||0}catch(e){}const nb=!bt||cs<bt;if(nb)try{localStorage.setItem(BK('T'),cs)}catch(e){}
   $('overTitle').innerHTML=['HEART','AURORA','STAR'][TOPK()-HK]+'<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);
@@ -382,12 +377,12 @@ function LIMY(){let m=0;for(let k=0;k<5;k++)m=Math.max(m,holdY(TR[k])+TR[k]);ret
 function holdY(r){return Math.max(VT+r+4,Math.min(TOP-r-6,TOP-r-34))} /* 대기 줄 = 보이지 않는 그리드 선 (원래 위치) */ // 떨어뜨릴 구슬 대기 위치 (더 높게)
 addEventListener('resize',resize);if(window.visualViewport)visualViewport.addEventListener('resize',resize);if(window.ResizeObserver)new ResizeObserver(resize).observe($('field'));
 function drawPiece(k,px,py,ang,mood,sc,alpha){const im=BASE[k],fc=FACE[(mood||'')+k]||FACE[''+k];if(!im)return;const s=im.width/Q*(sc||1);x.save();x.translate(px,py);if(alpha!=null)x.globalAlpha=alpha;x.drawImage(im,-s/2,-s/2,s,s);x.rotate(k>=HK?0:(ang||0));x.drawImage(fc,-s/2,-s/2,s,s);x.restore()}
-function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0,0,cv.width,cv.height);
+function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#13173a';x.fillRect(0,0,cv.width,cv.height); /* 판 밖 여백도 같은 색: 안쪽 두 줄 테두리 없앰 */
  let sx=0,sy=0;if(shake>0&&FXON){sx=(Math.random()*2-1)*5*shake;sy=(Math.random()*2-1)*5*shake}
  x.setTransform(SC,0,0,SC,OX+sx*SC,OY+sy*SC);
  // 바구니 안쪽
  const top=-OY/SC;x.fillStyle='#13173a';x.fillRect(0,top,W,H-top); // 단색 배경
- x.fillStyle='#3a3f80';x.fillRect(-4,top,4,H-top);x.fillRect(W,top,4,H-top);x.fillRect(-4,H,W+8,4);
+ 
  // 위험선
  const danger=state==='play'&&warnT>0;if(danger&&Math.floor(tGame*6)%2){x.strokeStyle='#ff5a6e';x.lineWidth=3;x.setLineDash([6,5]);x.beginPath();x.moveTo(0,LIMY());x.lineTo(W,LIMY());x.stroke();x.setLineDash([])} /* 점선 없앰: 가득 찰 때만 맨 위가 깜빡 */
  // 떨어뜨릴 위치 안내 + 지금 팡팡이
@@ -405,12 +400,11 @@ function draw(dt){x.setTransform(1,0,0,1,0,0);x.fillStyle='#0a0c1d';x.fillRect(0
   let bx=b.position.x,by=b.position.y;if(b.off){const c=Math.cos(b.angle),s=Math.sin(b.angle);bx+=b.off.x*c-b.off.y*s;by+=b.off.x*s+b.off.y*c} // 하트: 무게중심 → 그림 기준점
   drawPiece(k,bx,by,(b.angle||0)+wig,mood,(1+popS*.25)*wsc)}
  // 효과
- for(const f of FX){f.l-=dt;if(f.txt){f.y-=(f.L>1.5?10:22)*dt;const p=1-f.l/(f.L||1),pq=p<.1?.6+p/.1*.5:p<.18?1.1-(p-.1)/.08*.1:1,sz=f.px*dpr*pq,al=Math.max(0,Math.min(1,f.l*2.2));
-  x.save();x.setTransform(1,0,0,1,0,0);x.font=(f.num?`400 ${sz}px "Jersey 15"`:`700 ${sz}px Silkscreen`);const w=x.measureText(f.txt).width*(f.num?1:1.12)+sz*.4,cx=Math.max(w/2+2,Math.min(cv.width-w/2-2,OX+f.x*SC)),cy=OY+f.y*SC;
-  (f.num?numDraw:popDraw)(x,f.txt,cx,cy,sz,f.c,al);x.restore();continue}
+ for(const f of FX){f.l-=dt;if(f.txt){f.y-=22*dt;const p=1-f.l/(f.L||1),pop=p<.12?.5+p/.12*.8:p<.22?1.3-(p-.12)/.1*.3:1,cell=Math.max(2,Math.round((f.big?3.2:2.4)*(f.sc||1)*pop*SC)),im=pixText(f.txt,f.c,cell); // 도트 그래픽 숫자 (화면 픽셀에 딱 맞게)
+  x.globalAlpha=Math.max(0,Math.min(1,f.l*2.2));const w=im.width/SC,px=Math.max(w/2+2,Math.min(W-w/2-2,f.x));x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+(px-w/2)*SC),Math.round(OY+f.y*SC-im.height/2));x.restore();x.globalAlpha=1;continue}
   f.vy+=300*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.vx*=.97;x.globalAlpha=Math.max(0,f.l*1.6);x.fillStyle=f.c;x.fillRect(f.x,f.y,f.s,f.s);x.globalAlpha=1}
  FX=FX.filter(f=>f.l>0);
- if(state==='play'&&warnT>.3&&Math.floor(tGame*4)%2){x.save();x.setTransform(1,0,0,1,0,0);popDraw(x,'DANGER!',OX+W/2*SC,OY+(TOP-56)*SC,20*dpr,'warn',1);x.restore()}}
+ if(state==='play'&&warnT>.3){const im=pixText('DANGER!','#ff5a6e',Math.max(2,Math.round(2*SC)));if(Math.floor(tGame*4)%2){x.save();x.setTransform(1,0,0,1,0,0);x.drawImage(im,Math.round(OX+W/2*SC-im.width/2),Math.round(OY+(TOP-56)*SC-im.height/2));x.restore()}}}
 function drawNext(){const c=$('nextC'),g=c.getContext('2d');g.clearRect(0,0,c.width,c.height);const im=IMG[''+nxt];if(!im)return;g.clearRect(0,0,c.width,c.height);const s=Math.min(c.width-2,(44+nxt*6)*1.2);g.drawImage(im,(c.width-s)/2,(c.height-s)/2,s,s)}
 
 /* ===== 조작: 손가락으로 위치 고르고, 떼면 떨어뜨리기 ===== */
@@ -450,7 +444,7 @@ let setPaused=false;
 $('bSet').onclick=()=>{if(!window.phSettings)return;if(state==='play'){state='pause';setPaused=true;bgmStop()}
  phSettings.open({inGame:state!=='title',restart:()=>{setPaused=false;hide('ovPause');startGame(MODE)},home:()=>{setPaused=false;toMenu()},onClose:()=>{if(setPaused&&state==='pause'){state='play';bgmStart();lastT=0}setPaused=false}})};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')togglePause()});
-const TUT={"goal":"같은 팡팡이 둘이 닿으면 합쳐져서 커져요!<br>빨강 → … → 하트 → 마지막은 오로라 볼!<br>EASY 하트 · NORMAL 오로라 · HARD 별까지!<br>TIME ATTACK: 마지막 구슬을 최대한 빨리<br>SCORE: 점수 + 하트·오로라·별 보너스<br>맨 위까지 가득 차면 게임 끝!","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
+const TUT={"goal":"같은 팡팡이 둘이 닿으면 쑥 커져요!<br>가장 큰 팡팡이까지 키워 보세요.","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
 /* 모드 고르기: 위 슬라이드 토글(TIME ATTACK · SCORE, 기본 SCORE) → 아래 난이도 버튼을 누르면 시작 */
 let PICKM='score';function mSync(){$('bModeT').classList.toggle('on',PICKM==='time');$('bModeS').classList.toggle('on',PICKM==='score')}
 function lvSync(){document.querySelectorAll('#ovMode .phDiff').forEach(b=>b.classList.toggle('sel',b.dataset.l===LV))}
