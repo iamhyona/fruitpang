@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793560000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793417029";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -95,7 +95,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 </style>
 <script>/* 카톡 등 인앱 브라우저: 실제 보이는 높이로 화면 맞춤 */(function(){var d=document.documentElement;function f(){d.style.setProperty('--app-h',window.innerHeight+'px')}f();addEventListener('resize',f);addEventListener('orientationchange',function(){setTimeout(f,300)});addEventListener('pageshow',f);setTimeout(f,250);setTimeout(f,1000)})();</script>
 <style>html,body{height:var(--app-h,100dvh)!important}</style>
-<link rel="stylesheet" href="../games/ph.css?v=19"><style>#ovTitle{padding:0!important}
+<link rel="stylesheet" href="../games/ph.css?v=21"><style>#ovTitle{padding:0!important}
 .nextc{width:34px;height:34px;display:block}
 .go{font:700 38px "Silkscreen",monospace;color:#ff5a6e;text-shadow:0 0 12px rgba(255,90,110,.6);line-height:1.1;text-align:center;letter-spacing:.05em;margin-bottom:4px}.go.ok{color:#7ef0d0;text-shadow:0 0 12px rgba(126,240,208,.6)}
 .st{display:grid;grid-template-columns:1.5fr 1fr 1fr;width:min(290px,100%);border:3px solid var(--gb);border-radius:10px;background:#10132b}
@@ -167,7 +167,7 @@ html body #ovMode .phDiff.phDiff.phDiff.sel{background:color-mix(in srgb,var(--b
   </div></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
-<script src="../games/ph.js?v=34"></script>
+<script src="../games/ph.js?v=36"></script>
 <script>
 (()=>{
 const RANK_URL='https://script.google.com/macros/s/AKfycbzkdjVleobj98oyxlC77cUf5txCRiSB6D1zgRWU56pX22ElXAx9R8xFRGnV0nKAUbwC/exec';
@@ -356,14 +356,18 @@ function checkOver(dt){const full=freeX(aimX,TR[cur])===null; /* 지금 구슬�
 let ovTok=0,ovDone=-1; /* 결과 화면은 한 판에 한 번만 (두 번 뜨면 같은 기록을 두 번 등록할 수 있었음) */
 function waitNext(ms){const t=ovTok;setTimeout(()=>{if(state==='over'&&t===ovTok)showOver()},ms+2000)}
 $('bNext').onclick=e=>{e.stopPropagation();$('bNext').hidden=true;showOver()};
-function clearGame(){if(state!=='play')return;state='over';clearT=tGame;bgmStop();waitNext(1200)}
+function clearGame(){if(state==='over'&&MODE==='time'&&!clearT&&ovDone!==ovTok){clearT=tGame;$('field').classList.remove('dead');return} /* 2026-10-31: 끝난 직후(결과 뜨기 전) 마지막 합체로 목표 구슬이 생겨도 클리어로 인정 */
+ if(state!=='play')return;state='over';clearT=tGame;bgmStop();waitNext(1200)}
 const fmtT=t=>{const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(2)};
 const BON_H=300,BON_A=2000,BON_S=5000; // 스코어 모드 보너스: 하트 1개 300점, 오로라 1개 2000점
 function gameOver(){if(state!=='play')return;state='over';bgmStop();sfx.over();buzz([60,40,100]);$('field').classList.add('dead');waitNext(900)}
 function showOver(){if(ovDone===ovTok)return;ovDone=ovTok;let rec;const tOk=MODE==='time'&&clearT>0;
  if(tOk){const cs=Math.round(clearT*100);let bt=0;try{bt=+localStorage.getItem(BK('T'))||0}catch(e){}const nb=!bt||cs<bt;if(nb)try{localStorage.setItem(BK('T'),cs)}catch(e){}
-  $('overTitle').innerHTML=['HEART','AURORA','STAR'][TOPK()-HK]+'<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);
+  $('overTitle').innerHTML=['HEART','AURORA','STAR'][TOPK()-HK]+'<br>CLEAR!';$('overTitle').classList.add('ok');$('overScore').textContent=fmtT(clearT);$('stL').textContent=nb?'NEW BEST':'TIME';$('stL').classList.toggle('nb',nb);$('overInfo').innerHTML=nb?'NEW BEST!':'';
   rec={score:cs,stage:maxTier+1,mode:LVM('time'),lv:LV,saved:false}}
+ else if(MODE==='time'){ /* 2026-10-31: 타임어택 실패 → 점수 대신 버틴 시간 (기록은 목표 구슬에 닿아야 남아요) */
+  const goal=['HEART','AURORA','STAR'][TOPK()-HK];$('overTitle').innerHTML='TIME<br>OVER';$('overTitle').classList.remove('ok');$('overScore').textContent=fmtT(tGame);$('stL').textContent='TIME';$('stL').classList.remove('nb');
+  $('overInfo').innerHTML=goal+'에 닿아야 랭킹에 기록돼요';rec={score:0,stage:maxTier+1,mode:LVM('time'),lv:LV,saved:true}}
  else{ /* 스코어 모드, 또는 타임어택 실패 → 점수로 기록 (SCORE 랭킹) */
   const bonus=hearts*BON_H+auroras*BON_A+stars*BON_S,mulL=LVMUL[LV]||1,total=Math.round((score+bonus)*mulL),nb=total>best&&total>0;if(nb){best=total;try{localStorage.setItem(BK(),best)}catch(e){}}
   $('overTitle').innerHTML=MODE==='time'?'TIME<br>OVER':'GAME<br>OVER';$('overTitle').classList.remove('ok');$('overScore').textContent=total.toLocaleString();$('stL').textContent=nb?'NEW BEST':'SCORE';$('stL').classList.toggle('nb',nb);
