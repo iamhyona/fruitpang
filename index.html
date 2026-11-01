@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793513259";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793513843";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -107,6 +107,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .rtab.lvs{width:232px;max-width:100%;margin:0 0 4px}#rtL[hidden]{display:none!important} /* 난이도 탭은 TIME ATTACK 랭킹에서만 (SCORE는 난이도 통합) */
 .rtab{display:flex;gap:6px;margin:-2px 0 10px;width:min(290px,100%)}.rtab button{flex:1;white-space:nowrap;font-family:"Silkscreen",var(--f);font-weight:700;font-size:10px;letter-spacing:.08em;padding:7px 4px;border-radius:8px;border:2px solid var(--gb);background:transparent;color:var(--g2);cursor:pointer}.rtab button.on{background:#f2b000;border-color:#f2b000;color:#111}
 .hud .box small{margin:0 4px 0 0}
+#hL .hGoal{height:1.5em;width:auto;vertical-align:-.45em;margin-left:2px}
 /* v2 HUD: 라벨 위 · 숫자 아래 / 아이콘 버튼 정사각 */
 .hud{height:56px;gap:5px;flex:0 0 auto}
 .hud .phBx{height:100%}
@@ -437,7 +438,7 @@ function loop(t){try{const dt=lastT?Math.min(.05,(t-lastT)/1000):0;lastT=t;
 const PIX={pause:['........','.11..11.','.11..11.','.11..11.','.11..11.','.11..11.','.11..11.','........'],note:['....111.','....1111','....1..1','....1...','....1...','.1111...','11111...','.111....'],trophy:['.111111.','11111111','1.1111.1','.111111.','..1111..','...11...','..1111..','.111111.']};
 function pixIcon(k){const m=PIX[k];let r='';m.forEach((row,y)=>[...row].forEach((v,xx)=>{if(v==='1')r+=`<rect x="${xx}" y="${y}" width="1.02" height="1.02"/>`}));return `<i class="pix"><svg viewBox="0 0 ${m[0].length} ${m.length}" shape-rendering="crispEdges" fill="currentColor">${r}</svg></i>`}
 document.querySelectorAll('[data-ic]').forEach(el=>{el.outerHTML=pixIcon(el.dataset.ic).replace('<i class="pix"','<i class="pix" data-ic="'+el.dataset.ic+'"')});
-function hud(){const T=MODE==='time'&&state!=='title';$('hL').textContent=T?'TIME':'SCORE';$('hScore').textContent=T?fmtT(state==='over'&&clearT?clearT:tGame):score.toLocaleString();const s=$('hScore'),p=s.parentElement;let f=22;s.style.setProperty('font-size',f+'px','important');while(s.scrollWidth>p.clientWidth-12&&f>12){f--;s.style.setProperty('font-size',f+'px','important')}}
+function hud(){const T=MODE==='time'&&state!=='title',lk=T?'T'+TOPK():'S';if(hud.lk!==lk){hud.lk=lk;$('hL').innerHTML=T?'TIME <img class="hGoal" src="'+IMG[''+TOPK()].toDataURL()+'" alt="목표 '+['하트','오로라','별'][TOPK()-HK]+'">':'SCORE'} /* 2026-11-01: 타임어택 목표 구슬을 TIME 옆에 작게 */$('hScore').textContent=T?fmtT(state==='over'&&clearT?clearT:tGame):score.toLocaleString();const s=$('hScore'),p=s.parentElement;let f=22;s.style.setProperty('font-size',f+'px','important');while(s.scrollWidth>p.clientWidth-12&&f>12){f--;s.style.setProperty('font-size',f+'px','important')}}
 function show(id){$(id).classList.add('show')}function hide(id){$(id).classList.remove('show')}
 (function(){const sh=$('show');[0,2,4,6,8,9].forEach(k=>{const im=document.createElement('img');im.src=IMG[''+k].toDataURL();im.style.cssText='width:'+(k===9?52:k===8?42:34)+'px;height:auto;margin:0 -4px';im.alt='';sh.appendChild(im)})})();
 function togglePause(){if(state==='play'){state='pause';bgmStop();show('ovPause')}else if(state==='pause'){state='play';hide('ovPause');bgmStart();lastT=0}}
@@ -451,7 +452,11 @@ let setPaused=false;
 $('bSet').onclick=()=>{if(!window.phSettings)return;if(state==='play'){state='pause';setPaused=true;bgmStop()}
  phSettings.open({inGame:state!=='title',restart:()=>{setPaused=false;hide('ovPause');startGame(MODE)},home:()=>{setPaused=false;toMenu()},onClose:()=>{if(setPaused&&state==='pause'){state='play';bgmStart();lastT=0}setPaused=false}})};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play')togglePause()});
-const TUT={"goal":"같은 팡팡이 둘이 닿으면 쑥 커져요!<br>가장 큰 팡팡이까지 키워 보세요.","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
+const TUT={"goal":"같은 팡팡이 둘이 닿으면 쑥 커져요!<br>가장 큰 팡팡이까지 키워 보세요.<br><br><b>SCORE</b> 높은 점수에 도전<br><b>TIME ATTACK</b> 목표 구슬을 가장 빨리<br>EASY 하트 · NORMAL 오로라 · HARD 별","touch":[["좌우로 끌기","위치 고르기"],["손 떼기","떨어뜨리기"]],"pc":[["마우스 / ← →","떨어뜨릴 곳 고르기"],["클릭 / SPACE","떨어뜨리기"]]};
+/* 2026-11-01: HOW TO PLAY에 구슬 진화 순서(작은 그림 한 줄) — 시작 전에도 최신 설명이 보이게 저장 */
+(function(){try{const n=SK+1,cw=26,c=document.createElement('canvas');c.width=n*cw*2;c.height=cw*2;const g=c.getContext('2d');for(let k=0;k<n;k++){const im=IMG[''+k],z=(k>=HK?24:14+k*1.25)*2;g.drawImage(im,k*cw*2+(cw*2-z)/2,(cw*2-z)/2,z,z)}
+ TUT.goal=TUT.goal.replace('<br><br>','<br><img src="'+c.toDataURL()+'" alt="구슬 진화 순서: 빨강 주황 노랑 연두 초록 하늘 파랑 보라 하트 오로라 별" style="display:block;width:'+n*cw+'px;max-width:100%;height:auto;margin:12px auto 10px">');
+ localStorage.setItem('phTutCfg:'+location.pathname,JSON.stringify(TUT))}catch(e){}})();
 /* 모드 고르기: 위 슬라이드 토글(TIME ATTACK · SCORE, 기본 SCORE) → 아래 난이도 버튼을 누르면 시작 */
 let PICKM='score';function mSync(){$('bModeT').classList.toggle('on',PICKM==='time');$('bModeS').classList.toggle('on',PICKM==='score')}
 function lvSync(){document.querySelectorAll('#ovMode .phDiff').forEach(b=>b.classList.toggle('sel',b.dataset.l===LV))}
