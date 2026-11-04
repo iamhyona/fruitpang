@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793573539";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
+<head><style>html.phL body{visibility:hidden}</style><script>/* 글꼴·최신 버전 확인될 때까지 잠깐 가리기 (옛 글꼴·옛 화면 깜빡임 방지) */(function(){var d=document.documentElement,n=2;d.classList.add("phL");function o(){d.classList.remove("phL")}window.__phDone=function(){if(--n<=0)o()};setTimeout(o,1200);function f(){try{var F=document.fonts;Promise.all([F.load('700 14px "Silkscreen"'),F.load('12px "Galmuri11"'),F.load('22px "Jersey 15"')]).then(function(){return F.ready}).then(window.__phDone,window.__phDone)}catch(e){o()}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()})();</script><script>/* 옛 버전 캐시 자동 갱신 */(function(){var V="1793820000";try{fetch(location.pathname+"?_="+Date.now(),{cache:"no-store"}).then(function(r){return r.text()}).then(function(t){var m=t.match(/var V="(\d+)"/);if(m&&m[1]!==V&&location.search.indexOf("v="+m[1])<0){location.replace(location.pathname+"?v="+m[1])}if(!(m&&m[1]!==V)&&window.__phDone)__phDone()}).catch(function(){window.__phDone&&__phDone()})}catch(e){window.__phDone&&__phDone()}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>MARBLE PANG · 구슬팡</title>
@@ -360,9 +360,11 @@ function faceCanvas(k,mood){
  const R=TR[k]*Q,ri=R-OLW*Q,D=Math.ceil(R*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');g.translate(D/2,D/2);
  approvedMoodFace(g,Math.min(ri/15,FCAP)*FK[k]*(k===MAXK?1:1.1),ri*(k===HK?.02:.12),k,mood);return c;
 }
+/* 2026-11-04: 새 구슬 그림은 안쪽 여백이 있어 판정보다 작게 보였음 → 보이는 테두리가 판정 크기와 딱 맞게 키움 (하트·별·오로라는 그대로) */
+const FIT=[];function fitK(k){if(FIT[k]!=null)return FIT[k];if(k===HK||k===SK||k===MAXK)return FIT[k]=1;const c=approvedBody(k),g=c.getContext('2d'),W=c.width,d=g.getImageData(0,0,W,W).data;let x0=W,x1=0,y0=W,y1=0;for(let y=0;y<W;y+=2)for(let x=0;x<W;x+=2)if(d[(y*W+x)*4+3]>40){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}const vr=Math.max(x1-x0,y1-y0)/2+1;return FIT[k]=vr>0?(W/2)/vr:1}
 function fruitCanvas(k,mood,part){
  const D=Math.ceil(TR[k]*Q*2+4),c=document.createElement('canvas');c.width=c.height=D;const g=c.getContext('2d');
- g.drawImage(approvedBody(k),0,0,D,D);if(part!=='base')g.drawImage(faceCanvas(k,mood),0,0);return c;
+ if(fitK(k)===1)g.drawImage(approvedBody(k),0,0,D,D);else{const z=2*TR[k]*Q*fitK(k);g.drawImage(approvedBody(k),(D-z)/2,(D-z)/2,z,z)}if(part!=='base')g.drawImage(faceCanvas(k,mood),0,0);return c;
 }
 const IMG={};
 const BASE=[],FACE={};
